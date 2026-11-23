@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title id="pageTitle">Mr SK Shop</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>#bootSplash{position:fixed;inset:0;z-index:999;background:#fdf4ff;display:flex;align-items:center;justify-content:center}html,body{background:#fdf4ff}</style>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transparent}
+.hide{display:none!important}.no-scrollbar::-webkit-scrollbar{display:none}
+:root{--c1:#ec4899;--c2:#7c3aed;--orderBg:linear-gradient(135deg,#ec4899,#7c3aed);--orderText:🛒 অর্ডার করুন}
+.fixed-top{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:80}
+.glass-top{background:rgba(255,255,255,0.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.5);box-shadow:0 8px 32px rgba(0,0,0,0.10)}
+.glass-plate{background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,255,255,.42));-webkit-backdrop-filter:blur(16px) saturate(1.8);backdrop-filter:blur(16px) saturate(1.8);border:1px solid rgba(255,255,255,.95);box-shadow:0 6px 24px rgba(80,60,140,.16),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.4);border-radius:24px}
+.glass-btn{background:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.65)}
+.grad{background:linear-gradient(135deg,var(--c1),var(--c2))}
+.grad-text{background:linear-gradient(135deg,var(--c1),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.btn-order{background:var(--orderBg);color:#fff;box-shadow:0 8px 20px rgba(236,72,153,.35);border-radius:14px;font-weight:800;transition:.15s}
+.btn-order:active{transform:scale(.97)}
+.btn-cart{background:#fff;color:#111;border:2px solid var(--c1);border-radius:14px;font-weight:800}
+.btn-call{background:#2563eb;color:#fff;border-radius:14px;font-weight:800}
+.btn-wa{background:#25D366;color:#fff;border-radius:14px;font-weight:800}
+.btn-buy{background:linear-gradient(135deg,#facc15,#f59e0b);color:#fff;border-radius:14px;font-weight:800}
+.btn-vendor{background:linear-gradient(135deg,#0ea5e9,#7c3aed);color:#fff;border-radius:14px;font-weight:800}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:1px;width:70px;font-size:12px;color:#9ca3af;font-weight:600;position:relative;padding-top:4px}
+.nav-item i{font-size:19px}.nav-item.active{color:var(--c1)}.nav-item.active i{color:var(--c1);transform:scale(1.15)}
+.nav-item.active::before{content:'';position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:26px;height:4px;border-radius:99px;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.home-btn{width:62px;height:62px;background:linear-gradient(135deg,var(--c1),var(--c2));border-radius:50%;margin-top:-32px;border:4px solid #fff;box-shadow:0 8px 22px rgba(236,72,153,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+.badge{position:absolute;top:8px;right:8px;width:46px;height:46px;background:linear-gradient(135deg,#f43f5e,#ec4899);color:#fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:800;line-height:1.1;z-index:2}
+.cat{width:94px;height:94px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.premium-card{box-shadow:0 8px 28px rgba(0,0,0,.07);border:1px solid #f5d0fe}
+.star{font-size:28px;cursor:pointer;color:#e5e7eb}.star.active{color:#facc15}.star-small{color:#facc15;font-size:13px}
+input,select,textarea{outline:none}input:focus{border-color:var(--c1)!important}
+.pro-notif{position:fixed;top:96px;left:50%;transform:translateX(-50%) translateY(-80px);z-index:300;background:#fff;box-shadow:0 12px 32px rgba(0,0,0,.15);border-radius:16px;padding:12px 16px;display:flex;gap:10px;align-items:center;min-width:280px;max-width:92%;transition:.4s;opacity:0}
+.pro-notif.show{transform:translateX(-50%) translateY(0);opacity:1}
+.pro-notif .icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0}
+.pro-notif .bar{position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(135deg,var(--c1),var(--c2));border-radius:99px}
+.pro-notif.show .bar{animation:load 3s linear forwards}
+@keyframes load{from{width:100%}to{width:0%}}
+.out-stock{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:8px 14px;border-radius:99px;font-weight:800;font-size:13px;z-index:3}
+.dot{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.5);cursor:pointer;transition:.3s}.dot.active{background:#fff;width:22px}
+.qtybtn{width:28px;height:28px;border-radius:8px;background:#fdf2f8;font-weight:800;color:#be185d}
+
+.nav-item{border-radius:14px;padding:5px 0 3px;transition:.15s}
+.nav-item.active{background:#fdf2f8;color:var(--c1)}
+.nav-item:active{transform:scale(.94);background:#fce7f3}
+.btn-cart:active,.btn-cart.on{background:var(--orderBg);color:#fff;border-color:transparent}
+.btn-call:active,.btn-wa:active,.btn-buy:active,.btn-vendor:active{transform:scale(.97);filter:brightness(1.12)}
+.vend-cat{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:36px}
+.side-panel{width:300px;max-width:86%;height:100%;background:#fff;border-radius:0 28px 28px 0;display:flex;flex-direction:column;overflow:hidden;box-shadow:12px 0 40px rgba(0,0,0,.28);animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateX(-100%)}to{transform:none}}
+.side-head{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;padding:28px 18px 22px;border-radius:0 0 30px 0}
+.side-head::after{content:'';position:absolute;right:-34px;top:-34px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.13)}
+.side-head::before{content:'';position:absolute;left:-20px;bottom:-40px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1)}
+.side-avatar{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.25);border:3px solid rgba(255,255,255,.75);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;overflow:hidden;flex-shrink:0}
+.side-avatar img{width:100%;height:100%;object-fit:cover}
+.side-close{position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;z-index:2}
+.side-list{flex:1;overflow-y:auto;padding:8px 12px}
+.side-title{font-size:11px;font-weight:800;color:#a78bfa;letter-spacing:.6px;padding:12px 8px 4px}
+.side-item{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border-radius:16px;font-weight:700;font-size:15px;color:#374151;margin-bottom:3px;transition:.15s}
+.si-ico{width:38px;height:38px;border-radius:13px;background:#fdf2f8;color:var(--c1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:.15s}
+.si-arr{font-size:11px;color:#d1d5db}
+.side-item.on,.side-item:active{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;box-shadow:0 6px 16px rgba(236,72,153,.3)}
+.side-item.on .si-ico,.side-item:active .si-ico{background:rgba(255,255,255,.25);color:#fff}
+.side-item.on .si-arr,.side-item:active .si-arr{color:#fff}
+.side-foot{padding:12px 14px 16px;border-top:1px solid #fce7f3}
+.new-tag{background:#facc15;color:#78350f;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px}
+.fab-wrap{position:fixed;bottom:96px;right:max(14px,calc(50% - 226px));z-index:85;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab{position:relative;width:50px;height:50px;border-radius:50%;padding:0;background:linear-gradient(135deg,var(--c1),var(--c2));border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.fab:active{transform:scale(.92)}
+.fab::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--c1);opacity:0;animation:fabRing 2.4s ease-out infinite;pointer-events:none}
+@keyframes fabRing{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.5);opacity:0}}
+.fab-in{width:100%;height:100%;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.fab-in svg{width:100%;height:100%;display:block}
+.fab-in svg.x{width:20px;height:20px}
+.support-pop{width:236px;background:#fff;border-radius:20px;box-shadow:0 14px 40px rgba(0,0,0,.22);overflow:hidden}
+.sp-head{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;padding:12px 14px}
+.sp-item{display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;font-weight:700;font-size:14px;text-align:left}
+.sp-item i{font-size:22px}
+.sp-item.wa i{color:#25D366}.sp-item.tg i{color:#229ED9}
+.sp-item:active{background:#fdf2f8}
+.pay-ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px;flex-shrink:0}
+.ic{display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;font-style:normal;vertical-align:-.125em;line-height:1}
+.ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-item .ic{width:22px;height:22px;font-size:22px}
+.fab .ic{width:26px;height:26px}
+html,body{overscroll-behavior-y:none}
+button,a,label,select,.nav-item{touch-action:manipulation}
+body.kb{padding-bottom:12px!important}
+body.kb nav,body.kb .fab-wrap{display:none!important}
+.ticker{display:inline-block;white-space:nowrap;padding-left:100%;animation:tick 24s linear infinite;will-change:transform}
+@keyframes tick{to{transform:translateX(-100%)}}
+.premium-card{border-radius:var(--r,16px)!important}.btn-order,.btn-cart,.btn-call,.btn-wa,.btn-buy,.btn-vendor{border-radius:var(--br,14px)}.ic img{width:100%;height:100%;object-fit:contain}
+
+/* ---- compact buttons (centered by default, left via admin) ---- */
+.btn-order,.btn-cart,.btn-call,.btn-wa,.btn-buy,.btn-vendor{display:flex!important;align-items:center;justify-content:center;gap:6px;width:fit-content!important;min-width:min(100%,210px);max-width:100%;padding:9px 22px!important;font-size:14px!important;line-height:1.3;margin-left:auto;margin-right:auto;text-align:center}
+body.ba-left .btn-order,body.ba-left .btn-cart,body.ba-left .btn-call,body.ba-left .btn-wa,body.ba-left .btn-buy,body.ba-left .btn-vendor{margin-left:0;margin-right:auto}
+.flex-1.btn-call,.flex-1.btn-wa{width:auto!important;min-width:0;flex:1;margin:0}
+/* ---- product gallery ---- */
+#galThumbs{scroll-behavior:smooth}
+.vbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px 14px;border:1.5px solid var(--c1);color:var(--c1);border-radius:12px;font-weight:800;font-size:14px;background:#fff;transition:.15s}.vbtn:active{background:var(--c1);color:#fff;transform:scale(.98)}
+.vfield{width:100%;border:2px solid #f3e8ff;border-radius:12px;padding:10px 12px;font-size:14px;margin-top:4px;background:#fff}.vfield:focus{border-color:var(--c1)}
+/* size chips */
+.size-chip{min-width:48px;height:42px;padding:0 14px;border-radius:12px;border:2px solid #f3e8ff;background:#fff;font-weight:800;font-size:14px;color:#374151;transition:.15s}
+.size-chip.on{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(236,72,153,.3);transform:translateY(-1px)}
+#sizeBox.warn{border:2px solid #f43f5e;animation:shk .4s}
+@keyframes shk{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+/* cart page */
+.cart-hero{position:relative;overflow:hidden;border-radius:22px;padding:16px;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 12px 28px rgba(124,58,237,.28)}
+.cart-hero::after{content:'';position:absolute;right:-30px;top:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.14)}
+.cart-hero::before{content:'';position:absolute;left:-24px;bottom:-50px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.1)}
+.cart-hero h2{font-size:21px;font-weight:800;line-height:1.1}.cart-hero p{font-size:12.5px;opacity:.92;margin-top:3px}
+.ch-ico{width:50px;height:50px;border-radius:16px;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:26px}
+.ch-sec{font-size:10.5px;font-weight:700;text-align:center;background:rgba(255,255,255,.2);border-radius:12px;padding:5px 9px;line-height:1.25}
+.cart-card{background:#fff;border-radius:22px;margin-top:14px;box-shadow:0 8px 28px rgba(120,60,160,.09);border:1px solid #f5e9ff;overflow:hidden}
+.cart-sec{display:flex;align-items:center;gap:9px;padding:13px 16px;font-weight:800;font-size:15.5px;background:linear-gradient(135deg,#fdf2f8,#f5f3ff);border-bottom:1px solid #f3e8ff}
+.cs-ico{width:32px;height:32px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 3px 10px rgba(124,58,237,.14)}
+.cart-pad{padding:14px 16px 16px}
+.cf+.cf{margin-top:12px}.cf label{font-weight:700;font-size:13.5px;color:#4b4668}
+.cin{width:100%;border:2px solid #f3e8ff;border-radius:14px;padding:12px 14px;font-size:14px;background:#fff;margin-top:6px;transition:.15s}
+.cin:focus{border-color:var(--c1)!important;box-shadow:0 0 0 4px rgba(236,72,153,.1)}
+.coupon-box{display:flex;gap:8px;align-items:center;border:2px dashed var(--c1);border-radius:16px;padding:6px 6px 6px 12px;background:#fff7fb}
+.ci{position:relative;display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid #f6edff}.ci:last-child{border-bottom:0}
+.ci-img{width:82px;height:82px;border-radius:18px;object-fit:cover;flex-shrink:0;box-shadow:0 6px 16px rgba(0,0,0,.12);background:#fce7f3}
+.ci-info{flex:1;min-width:0;padding-right:26px}
+.ci-info h4{font-weight:800;font-size:14.5px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ci-size{display:inline-block;margin-top:4px;background:#f3e8ff;color:#6d28d9;font-size:11.5px;font-weight:800;padding:2px 10px;border-radius:99px}
+.ci-price{font-size:13px;margin-top:3px;color:#6b7280}.ci-price del{color:#9ca3af;font-size:12px}.ci-price b{color:#111}
+.ci-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.ci-qty{display:flex;align-items:center;gap:2px;background:#fdf2f8;border-radius:99px;padding:3px}
+.ci-qty button{width:30px;height:30px;border-radius:50%;background:#fff;font-weight:800;font-size:17px;color:#be185d;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.ci-qty b{min-width:30px;text-align:center;font-size:14px}
+.ci-total{font-weight:800;font-size:16.5px}
+.ci-del{position:absolute;top:12px;right:14px;width:26px;height:26px;border-radius:50%;background:#fff1f2;color:#e11d48;font-size:12px;font-weight:800}
+.cart-empty{text-align:center;padding:30px 16px 26px}.ce-ico{font-size:58px}.cart-empty h3{font-weight:800;font-size:18px;margin-top:6px}.cart-empty p{font-size:13px;color:#6b7280;margin:4px 0 14px}
+.sum-row{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;border-bottom:1px dashed #f0e4fb}
+.sum-total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,#fdf2f8,#f5f3ff);font-weight:800;font-size:17px}
+.sum-total .grad-text{font-size:21px}
+.trust-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.trust-row div{background:#fff;border-radius:16px;padding:10px 4px;text-align:center;font-size:11px;font-weight:700;color:#4b4668;box-shadow:0 4px 14px rgba(120,60,160,.08)}
+.trust-row span{display:block;font-size:20px;margin-bottom:2px}
+.cart-pg .btn-order,.cart-pg .btn-wa{width:100%!important;padding:15px 22px!important}
+#paymentList label{border-radius:18px;transition:.15s}
+#paymentList label.border-pink-300{box-shadow:0 6px 18px rgba(236,72,153,.16)}
+
+/* ===== v2: category chips ===== */
+#catRow{scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.cat-chip{flex-shrink:0;scroll-snap-align:start;padding:4px 13px;border-radius:11px;border:1.5px solid color-mix(in srgb,var(--c1) 22%,#fff);background:#fff;font-weight:600;font-size:12.5px;line-height:1.35;color:#4b5563;white-space:nowrap;box-shadow:0 2px 8px rgba(60,40,120,.05);transition:background .25s,border-color .25s,color .25s,transform .15s}
+.cat-chip:active{transform:scale(.95)}
+.cat-chip.on{background:color-mix(in srgb,var(--c1) 14%,#fff);border-color:color-mix(in srgb,var(--c1) 50%,#fff);color:var(--c1);font-weight:700}
+#catRow{gap:7px!important;padding-top:10px!important;padding-bottom:2px!important}
+/* ===== v2: product card ===== */
+.pc{background:#fff;border:1px solid #ece8f3;border-radius:20px;padding:10px;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(60,40,120,.05)}
+.pc-img{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#f3f0f7;cursor:pointer}
+.pc-img img{width:100%;height:100%;object-fit:cover;display:block}
+.pc-name{margin-top:10px;font-size:14.5px;font-weight:600;color:#4b5563;line-height:1.35;min-height:39px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.pc-price{display:flex;align-items:baseline;gap:8px;margin-top:6px;flex-wrap:wrap}
+.pc-price del{color:#9ca3af;font-size:13px}.pc-price b{color:#f0545f;font-size:19px;font-weight:800}
+.pc-btn{margin-top:10px;width:100%;padding:8px 10px;border-radius:12px;background:var(--orderBg);color:#fff;font-weight:700;font-size:13px;line-height:1.3;transition:transform .15s,filter .15s}
+.pc-btn:active{transform:scale(.97);filter:brightness(1.08)}
+.pc-btn.alt{background:#fff;color:var(--c1);border:1.5px solid var(--c1)}
+.pc-btn.off{background:#e5e7eb;color:#9ca3af}
+/* ===== v2: logo header ===== */
+#logoPlate.has-logo{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0}
+#logoBox{transition:opacity .3s}
+
+/* v3 search */
+.sb{display:flex;align-items:center;gap:6px;background:#fff;border:2px solid color-mix(in srgb,var(--c1) 18%,#fff);border-radius:20px;padding:5px 5px 5px 14px;box-shadow:0 6px 20px rgba(60,40,120,.08);transition:border-color .2s,box-shadow .2s}
+.sb:focus-within{border-color:var(--c1);box-shadow:0 0 0 4px color-mix(in srgb,var(--c1) 14%,transparent),0 8px 24px rgba(60,40,120,.1)}
+.sb-ic{color:#9ca3af;font-size:17px;display:flex}
+.sb input{flex:1;min-width:0;border:0!important;background:transparent;font-size:15px;padding:9px 4px;color:#1f2937}
+.sb input::-webkit-search-cancel-button{display:none}
+.sb-x{width:28px;height:28px;border-radius:50%;background:#f3f4f6;color:#6b7280;font-size:12px;flex-shrink:0}
+.sb-go{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
+.sb-go:active{transform:scale(.92)}
+/* ===== v4 additions ===== */
+.rev-c .star-small{font-size:10.5px;letter-spacing:-.5px}
+/* 3D support button */
+.fab{width:58px;height:58px;border:0!important;
+ background:radial-gradient(circle at 50% 118%,rgba(255,255,255,.35) 0,rgba(255,255,255,0) 55%),linear-gradient(150deg,color-mix(in srgb,var(--c1) 55%,#fff) 0%,var(--c1) 38%,var(--c2) 100%)!important;
+ box-shadow:0 16px 20px -8px color-mix(in srgb,var(--c2) 75%,#000),0 5px 0 color-mix(in srgb,var(--c2) 70%,#000),0 8px 14px rgba(0,0,0,.25),inset 0 -7px 10px rgba(0,0,0,.28),inset 0 6px 9px rgba(255,255,255,.6)!important;
+ transition:transform .12s,box-shadow .12s;animation:fabFloat 3.2s ease-in-out infinite}
+.fab::before{content:'';position:absolute;left:11%;top:5%;width:78%;height:46%;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0));pointer-events:none;z-index:3}
+.fab:active{animation:none;transform:translateY(4px)!important;box-shadow:0 6px 8px -4px color-mix(in srgb,var(--c2) 75%,#000),0 1px 0 color-mix(in srgb,var(--c2) 70%,#000),inset 0 -5px 8px rgba(0,0,0,.28),inset 0 5px 8px rgba(255,255,255,.5)!important}
+@keyframes fabFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.fab-in{position:relative;z-index:2}
+.fab-in svg:not(.x){padding:0}
+/* notice bar */
+.notice-bar{padding:4px 0}
+.notice-btn{margin:0 8px 0 6px;display:flex;align-items:center;justify-content:center;height:29px;border-radius:99px;background:linear-gradient(180deg,#fff 0%,#fdf2f8 100%);box-shadow:0 3px 10px rgba(0,0,0,.25),inset 0 -2px 0 rgba(0,0,0,.07);position:relative;z-index:2}
+.nb-in{display:flex;align-items:center;gap:6px;padding:0 13px 0 10px;font-size:13px;font-weight:800;color:var(--c2);white-space:nowrap}
+.nb-bell{display:inline-flex;font-size:14px;color:var(--c1);transform-origin:50% 10%;animation:bellRing 2.8s ease-in-out infinite}
+@keyframes bellRing{0%,55%,100%{transform:rotate(0)}60%{transform:rotate(16deg)}65%{transform:rotate(-14deg)}70%{transform:rotate(10deg)}75%{transform:rotate(-8deg)}80%{transform:rotate(4deg)}}
+.notice-btn.has-img{background:none;box-shadow:none;height:34px;border-radius:0}
+.notice-btn.has-img img{height:100%;width:auto;max-width:140px;object-fit:contain;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.notice-btn.has-img .nb-in{display:none}
+.notice-run{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent);mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent)}
+.ticker{padding-top:3px!important;padding-bottom:3px!important}
+/* logo: kill white box */
+#logoBox.fallback-blend{mix-blend-mode:multiply}
+/* boot splash (hides old/default content until fresh data is ready) */
+#bootSplash{position:fixed;inset:0;z-index:999;background:#fdf4ff;display:flex;align-items:center;justify-content:center;transition:opacity .35s}
+#bootSplash.out{opacity:0;pointer-events:none}
+#bootSplash .sp-ring{width:46px;height:46px;border-radius:50%;border:4px solid #f3e8ff;border-top-color:#ec4899;border-right-color:#7c3aed;animation:bspin .8s linear infinite}
+@keyframes bspin{to{transform:rotate(360deg)}}
+/* product description card */
+.desc-card{white-space:pre-line}
+/* ===== v5: refined toast + entry popup ===== */
+.pro-notif{min-width:290px;max-width:92%;padding:12px 14px 14px 12px!important;gap:12px!important;border-radius:16px!important;background:rgba(255,255,255,.97)!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(17,24,39,.06);box-shadow:0 20px 40px -14px rgba(17,24,39,.32),0 2px 6px rgba(17,24,39,.06)!important;overflow:hidden;transition:transform .5s cubic-bezier(.2,.9,.25,1.05),opacity .3s!important}
+.pro-notif .icon{width:36px!important;height:36px!important;border-radius:11px!important;background:var(--nc-bg,#ecfdf5)!important;color:var(--nc,#059669)!important;font-size:0!important}
+.pro-notif .icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.pro-notif #notifTitle{font-size:14px!important;font-weight:700;color:#111827;line-height:1.25}
+.pro-notif #notifMsg{font-size:12.5px!important;color:#6b7280!important;line-height:1.35;margin-top:1px}
+.pro-notif>button{width:24px;height:24px;border-radius:50%;font-size:16px!important;line-height:1;color:#9ca3af!important;align-self:flex-start;flex-shrink:0}
+.pro-notif>button:active{background:#f3f4f6}
+.pro-notif .bar{height:2.5px!important;background:var(--nc,#059669)!important;opacity:.8;border-radius:0!important}
+.pro-notif.show .bar{animation:load 3.2s linear forwards!important}
+.pro-notif.n-ok{--nc:#059669;--nc-bg:#ecfdf5}
+.pro-notif.n-warn{--nc:#d97706;--nc-bg:#fffbeb}
+.pro-notif.n-err{--nc:#e11d48;--nc-bg:#fff1f2}
+.pro-notif.n-info{--nc:#4f46e5;--nc-bg:#eef2ff}
+/* entry popup */
+#entryPop{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(15,10,30,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);animation:epFade .25s ease}
+#entryPop.out{opacity:0;transition:opacity .22s}
+.ep-card{position:relative;width:100%;max-width:340px;max-height:86vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 30px 60px -18px rgba(0,0,0,.45);animation:epPop .35s cubic-bezier(.2,.9,.25,1.05)}
+.ep-img{display:block;width:100%;height:auto;max-height:44vh;object-fit:cover;background:#f3f0f7}
+.ep-body{padding:18px 18px 16px;text-align:center}
+.ep-title{font-size:19px;font-weight:800;color:#111827;line-height:1.3}
+.ep-text{font-size:13.5px;color:#4b5563;line-height:1.6;margin-top:7px;white-space:pre-line}
+.ep-btn{display:block;width:100%;margin-top:14px;padding:11px 16px;border-radius:13px;background:var(--orderBg);color:#fff;font-weight:700;font-size:14.5px;box-shadow:0 8px 18px -6px color-mix(in srgb,var(--c1) 60%,transparent);transition:transform .15s}
+.ep-btn:active{transform:scale(.97)}
+.ep-skip{display:block;margin:8px auto 0;padding:6px 14px;font-size:12.5px;color:#9ca3af;font-weight:600}
+.ep-x{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(17,24,39,.55);color:#fff;display:flex;align-items:center;justify-content:center;z-index:2;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ep-x svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round}
+.ep-card.noimg .ep-x{background:#f3f4f6}.ep-card.noimg .ep-x svg{stroke:#6b7280}
+@keyframes epFade{from{opacity:0}to{opacity:1}}
+@keyframes epPop{from{transform:translateY(18px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+/* ===== v6: home footer ===== */
+#homeFooter{margin-top:34px}
+.ft{color:#fff;border-radius:34px 34px 0 0;padding:34px 22px 26px;position:relative;overflow:hidden}
+.ft::before{content:'';position:absolute;right:-70px;top:-70px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);pointer-events:none}
+.ft-h{font-size:21px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;line-height:1.2}
+.ft-p{font-size:14px;line-height:1.65;color:rgba(255,255,255,.82);margin-top:12px}
+.ft-soc{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.ft-sb{width:54px;height:54px;border-radius:16px;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;transition:transform .15s,background .15s}
+.ft-sb:active{transform:scale(.93);background:rgba(255,255,255,.22)}
+.ft-sb svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ft-help{display:flex;align-items:center;gap:14px;width:100%;text-align:left;margin-top:16px;padding:18px;border-radius:20px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.2);color:#fff}
+.ft-help:active{background:rgba(255,255,255,.14)}
+.ft-hi{width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ft-hi svg{width:24px;height:24px;color:var(--fta,#7c3aed);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ft-help b{display:block;font-size:17px;font-weight:700;line-height:1.25}
+.ft-help small{display:block;font-size:13px;color:rgba(255,255,255,.7);margin-top:2px}
+.ft-links{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:26px}
+.ft-links button{font-size:15px;color:rgba(255,255,255,.68);font-weight:500;padding:2px 0}
+.ft-links button:active{color:#fff}
+.ft-copy{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);text-align:center;font-size:13px;color:rgba(255,255,255,.55);line-height:1.6}
+#ftSheet{position:fixed;inset:0;z-index:410;background:rgba(15,10,30,.55);display:flex;align-items:flex-end;justify-content:center;animation:epFade .2s ease}
+#ftSheet .fs-b{background:#fff;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;border-radius:26px 26px 0 0;padding:20px 18px 26px;animation:epPop .3s ease}
+#ftSheet h3{font-weight:800;font-size:18px}
+#ftSheet p{white-space:pre-line;font-size:14px;line-height:1.7;color:#4b5563;margin-top:10px}
+</style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="bg-[#fdf4ff] pb-[84px] pt-[118px]">
+<div id="bootSplash"><div class="sp-ring"></div></div>
+<div id="proNotif" class="pro-notif"><div class="icon grad" id="notifIcon">✓</div><div class="flex-1"><b id="notifTitle" class="text-[14px] block">সফল হয়েছে!</b><p id="notifMsg" class="text-[12px] text-gray-500">আপনার কাজ সম্পূর্ণ হয়েছে</p></div><button onclick="hideNotif()" class="text-gray-400 text-lg">×</button><div class="bar"></div></div>
+
+<div class="fixed-top">
+<div class="notice-bar grad text-white flex items-center text-[13px] font-bold"><div id="noticeBtn" class="notice-btn shrink-0"><img id="noticeImg" class="hide" alt=""><span id="noticeIn" class="nb-in"><span class="nb-bell"><i class="fa fa-bell" data-ico="bell"></i></span><span data-t="notice">নোটিশ</span></span></div><div class="flex-1 overflow-hidden whitespace-nowrap flex items-center notice-run"><div id="noticeText" class="ticker py-1">স্বাগতম</div></div></div>
+<header class="glass-top px-3 py-2.5 flex justify-between items-center">
+<button onclick="toggleMenu()" class="w-10 h-10 glass-btn rounded-full flex items-center justify-center text-[20px]"><i class="fa fa-bars" data-ico="menu"></i></button>
+<div id="logoPlate" class="glass-plate flex items-center justify-center gap-2.5 px-4 py-1.5 flex-1 min-w-0 mx-2"><img id="logoBox" alt="" class="hide" style="height:46px;width:auto;max-width:100%;object-fit:contain;display:block"><div id="nameBox" class="leading-none min-w-0"><b class="text-[17px] grad-text" id="shopName">Mr SK Shop</b><p class="text-[10px] text-gray-600 flex items-center gap-1"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span><span id="shopSlogan">Premium Verified Shop</span></p></div></div>
+<button onclick="go('cart','cart')" class="relative w-10 h-10 glass-btn rounded-full flex items-center justify-center text-[19px]"><i data-ico="cart" class="fa fa-shopping-cart text-purple-700"></i><span id="cartTop" class="absolute -top-1 -right-1 grad text-white text-[10px] min-w-[19px] h-[19px] rounded-full flex items-center justify-center px-1 font-bold">0</span></button>
+</header>
+</div>
+
+<div id="shell" class="max-w-[480px] mx-auto min-h-screen bg-[#fdf4ff] relative shadow-2xl overflow-hidden">
+<div id="sideMenu" class="hide fixed inset-0 z-[90] bg-black/50" onclick="toggleMenu()"><div class="side-panel" onclick="event.stopPropagation()">
+<div class="side-head"><button class="side-close" onclick="toggleMenu()"><i data-ico="close" class="fa fa-xmark"></i></button><div class="flex items-center gap-3 relative z-[1]"><div class="side-avatar" id="sideAvatar"><i class="fa fa-user"></i></div><div class="min-w-0"><p class="text-[11px] opacity-80 font-bold" id="sideShopName">Mr SK Shop</p><b class="text-[17px] block truncate" id="sideName">স্বাগতম, অতিথি</b><p class="text-[12px] opacity-90 truncate" id="sideSub">লগইন করে অর্ডার করুন</p></div></div></div>
+<div class="side-list">
+<p class="side-title" data-t="sT1">মেইন মেনু</p>
+<button class="side-item" data-p="home" onclick="sideGo('home','home')"><span class="si-ico"><i data-ico="sHome" class="fa fa-house"></i></span><span class="flex-1 text-left" data-t="sHome">হোম</span><i class="fa fa-chevron-right si-arr"></i></button>
+<button class="side-item" data-p="cart" onclick="sideGo('cart','cart')"><span class="si-ico"><i data-ico="sCart" class="fa fa-cart-shopping"></i></span><span class="flex-1 text-left" data-t="sCart">আমার কার্ট</span><i class="fa fa-chevron-right si-arr"></i></button>
+<button class="side-item" data-p="orders" onclick="sideGo('orders','orders')"><span class="si-ico"><i data-ico="sOrders" class="fa fa-box"></i></span><span class="flex-1 text-left" data-t="sOrders">আমার অর্ডার</span><i class="fa fa-chevron-right si-arr"></i></button>
+<button class="side-item" data-p="reviews" onclick="sideGo('reviews','home')"><span class="si-ico"><i data-ico="sReviews" class="fa fa-star"></i></span><span class="flex-1 text-left" data-t="sReviews">সব রিভিউ</span><i class="fa fa-chevron-right si-arr"></i></button>
+<p class="side-title" data-t="sT2">ভেন্ডর শিপ</p>
+<button class="side-item" data-p="vendors" onclick="sideGo('vendors','category')"><span class="si-ico"><i data-ico="sVendors" class="fa fa-store"></i></span><span class="flex-1 text-left" data-t="sVendors">ভেন্ডর লিস্ট</span><i class="fa fa-chevron-right si-arr"></i></button>
+<button class="side-item" data-p="vendor" onclick="sideGo('vendor','vendor')"><span class="si-ico"><i data-ico="sVendor" class="fa fa-handshake"></i></span><span class="flex-1 text-left" id="sideVendorTxt">Vendor Ship - আবেদন</span><span id="sideVendorTag"><span class="new-tag">NEW</span></span></button>
+<p class="side-title" data-t="sT3">অ্যাকাউন্ট ও সাপোর্ট</p>
+<button class="side-item" data-p="account" onclick="sideGo('account','account')"><span class="si-ico"><i data-ico="sAccount" class="fa fa-user"></i></span><span class="flex-1 text-left" data-t="sAccount">আমার অ্যাকাউন্ট</span><i class="fa fa-chevron-right si-arr"></i></button>
+<button class="side-item" onclick="sideSupport()"><span class="si-ico"><i data-ico="sSupport" class="fa fa-headset"></i></span><span class="flex-1 text-left" data-t="sSupport">লাইভ সাপোর্ট</span><i class="fa fa-chevron-right si-arr"></i></button>
+</div>
+<div class="side-foot" id="sideFoot"></div>
+</div></div>
+
+<div id="searchBar" class="px-3 mt-3"><div class="sb"><span class="sb-ic"><i data-ico="searchL" class="fa fa-search"></i></span><input id="searchInput" type="search" autocomplete="off" oninput="dSearch();document.getElementById('sbClear').classList.toggle('hide',!this.value)" data-tp="search" placeholder="Search Product ..."><button id="sbClear" type="button" class="sb-x hide" aria-label="Clear" onclick="var i=document.getElementById('searchInput');i.value='';i.focus();this.classList.add('hide');renderProducts()">✕</button><button type="button" class="sb-go" aria-label="Search" onclick="renderProducts()"><i data-ico="search" class="fa fa-search"></i></button></div></div>
+
+<div id="siteOff" class="hide text-center py-20"><div class="text-6xl">🔧</div><h2 class="font-bold text-xl mt-3">সাইটটি বর্তমানে বন্ধ আছে</h2></div>
+
+<div id="mainApp">
+<div id="page-home">
+<div class="mx-3 mt-3 relative rounded-[20px] overflow-hidden shadow-xl grad" id="bannerBox">
+<img id="bannerImg" src="" onerror="this.style.opacity=0" onload="this.style.opacity=1" class="w-full h-[165px] object-cover">
+
+
+<button onclick="prevBanner()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 w-8 h-8 rounded-full font-bold z-10">‹</button>
+<button onclick="nextBanner(true)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 w-8 h-8 rounded-full font-bold z-10">›</button>
+<div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10" id="bannerDots"></div>
+</div>
+<div class="flex gap-2.5 px-3 pt-3 pb-1 overflow-x-auto no-scrollbar relative" id="catRow"></div>
+
+<div class="flex justify-between items-center px-3 mt-4"><span id="allBtn"></span><select id="sortSelect" onchange="renderProducts()" class="border-2 px-2 py-1.5 text-sm rounded-lg bg-white"><option value="latest">Product: Latest</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></div>
+<h3 class="font-bold text-[17px] px-3 mt-4" id="listTitle">✨ All Products</h3>
+<div id="productGrid" class="grid grid-cols-2 gap-3 p-3 pt-2"></div>
+<div id="homeReviews" class="hide"></div>
+<div id="revBtn" class="px-3 mt-5 mb-4"><button onclick="go('reviews','home')" class="w-full flex items-center justify-between gap-3 bg-white premium-card rounded-2xl px-4 py-3.5 text-left"><span class="w-11 h-11 rounded-2xl grad flex items-center justify-center text-[22px] shrink-0">⭐</span><span class="flex-1"><b data-t="allRev" class="block text-[16px]">রিভিউ দেখুন</b><small id="revBtnSub" class="text-[12px] text-gray-500">কাস্টমারদের মতামত পড়ুন ও নিজের রিভিউ দিন</small></span><span class="text-pink-600 font-bold text-xl">›</span></button></div>
+<footer id="homeFooter" class="hide"></footer>
+</div>
+
+<div id="page-detail" class="hide px-3 pt-2"><p class="text-[13px] text-gray-500"><span onclick="go('home','home')" class="cursor-pointer">Home</span> / <span id="detailCat">Product</span></p><div id="detailBox" class="mt-2 pb-2"></div><div id="detailReviews" class="pb-4"></div></div>
+
+<div id="page-vendor" class="hide px-3 pt-2">
+<div class="grad rounded-2xl p-5 text-white text-center shadow-xl"><div class="text-4xl">🏪</div><h2 class="font-bold text-[22px] mt-2">Vendor Ship</h2><p class="text-[13px] opacity-90 mt-1">আপনার প্রোডাক্ট আমাদের শপে বিক্রি করুন</p><button onclick="go('vendors','category')" class="mt-3 bg-white/90 text-pink-600 font-bold text-sm px-4 py-2 rounded-full"><i class="fa fa-store"></i> ভেন্ডর লিস্ট দেখুন</button></div>
+<div class="bg-white premium-card rounded-2xl p-4 mt-3"><h3 class="font-bold">📝 ভেন্ডর আবেদন ফর্ম</h3>
+<label class="text-sm font-bold block mt-3">আপনার নাম *</label><input id="vName" class="w-full border-2 rounded-xl px-3 py-3 mt-1 text-sm">
+<label class="text-sm font-bold block mt-3">শপ / ব্যবসার নাম *</label><input id="vShop" class="w-full border-2 rounded-xl px-3 py-3 mt-1 text-sm">
+<label class="text-sm font-bold block mt-3">মোবাইল নাম্বার *</label><input id="vPhone" class="w-full border-2 rounded-xl px-3 py-3 mt-1 text-sm">
+<label class="text-sm font-bold block mt-3">কি প্রোডাক্ট বিক্রি করতে চান?</label><select id="vCat" class="w-full border-2 rounded-xl px-3 py-3 mt-1 text-sm"><option>মধু / অর্গানিক</option><option>ফ্যাশন / পোশাক</option><option>গ্যাজেট</option><option>বিউটি</option><option>অন্যান্য</option></select>
+<label class="text-sm font-bold block mt-3">ঠিকানা</label><input id="vAddress" class="w-full border-2 rounded-xl px-3 py-3 mt-1 text-sm">
+<button onclick="submitVendor()" class="w-full btn-vendor py-4 mt-4">🚀 ভেন্ডর আবেদন পাঠান</button></div>
+</div>
+
+<div id="page-reviews" class="hide px-3 pt-2"><div class="grad text-white rounded-2xl p-4 text-center"><h2 class="font-bold text-[19px]" data-t="revTitle">⭐ কাস্টমার রিভিউ</h2><p class="text-[12px] opacity-90 mt-0.5" id="revCountTxt"></p></div><div id="revForm" class="bg-white premium-card rounded-2xl p-4 mt-3"><h4 class="font-bold">✍️ আপনার রিভিউ দিন</h4><input id="revName" placeholder="আপনার নাম / Your Name" class="w-full border-2 rounded-xl px-3 py-2.5 mt-3 text-sm"><div class="flex items-center gap-1 mt-3"><span class="text-sm font-bold">রেটিং:</span><span id="revStars" class="flex gap-1"><span class="star" onclick="setRevStar(1)">★</span><span class="star" onclick="setRevStar(2)">★</span><span class="star" onclick="setRevStar(3)">★</span><span class="star" onclick="setRevStar(4)">★</span><span class="star" onclick="setRevStar(5)">★</span></span></div><textarea id="revText" placeholder="প্রোডাক্ট কেমন লেগেছে?" class="w-full border-2 rounded-xl px-3 py-2.5 mt-3 text-sm" rows="2"></textarea><button onclick="submitReview()" class="w-full btn-order py-3 mt-3">⭐ রিভিউ পোস্ট করুন</button></div><h3 class="font-bold text-[16px] mt-4">সব রিভিউ</h3><div id="allReviews" class="mt-2 space-y-2"></div></div>
+
+<div id="page-cart" class="hide px-3 pt-2 cart-pg"><div id="cartLoginNote" class="hide"></div>
+<div class="cart-hero"><div class="flex items-center gap-3 relative z-[1]"><div class="ch-ico">🛒</div><div class="flex-1"><h2>আমার কার্ট</h2><p id="cartCount">কার্ট এখন খালি</p></div><div class="ch-sec">🔒 নিরাপদ<br>চেকআউট</div></div></div>
+<div class="cart-card"><div class="cart-sec"><span class="cs-ico">🛍️</span>আপনার পণ্যসমূহ</div><div id="cartSummary"></div></div>
+<div id="cartBody">
+<div class="cart-card"><div class="cart-sec"><span class="cs-ico">📍</span>ডেলিভারি তথ্য</div><div class="cart-pad">
+<div class="cf"><label>👤 আপনার নাম / Your Name *</label><input id="coName" class="cin" placeholder="Rahim / রহিম"></div>
+<div class="cf"><label>📞 আপনার নাম্বার / Phone *</label><input id="coPhone" class="cin" inputmode="tel" placeholder="01XXXXXXXXX"></div>
+<div class="cf"><label>🏠 ঠিকানা / Address *</label><input id="coAddress" class="cin" placeholder="Dhaka / ঢাকা"></div>
+<div class="cf"><label>⏰ ডেলিভারি সময় / Delivery Time *</label><select id="coDeliveryTime" class="cin"><option>⚡ একদিনের মধ্যে ডেলিভারি (২৪ ঘণ্টা)</option><option>🚚 ২-৩ দিনের মধ্যে ডেলিভারি</option><option>📦 ৩-৫ দিনের মধ্যে ডেলিভারি</option></select></div>
+<div class="cf"><label>🗺️ বিভাগ / Division *</label><select id="coDivision" onchange="renderCart()" class="cin"><option value="in">ঢাকার ভিতরে</option><option value="out">ঢাকার বাহিরে</option></select></div>
+</div></div>
+<div class="cart-card"><div class="cart-sec"><span class="cs-ico">🎟️</span>কুপন কোড</div><div class="cart-pad"><div class="coupon-box"><input id="couponInput" placeholder="SK10 / EID50" class="cin" style="margin:0;border:0;background:transparent;text-transform:uppercase;font-weight:800;letter-spacing:1px"><button onclick="applyCoupon()" class="grad text-white px-5 rounded-xl font-bold text-sm">Apply</button></div><p id="couponMsg" class="text-xs font-bold mt-2 text-green-600"></p></div></div>
+<div class="cart-card"><div class="cart-sec"><span class="cs-ico">💳</span>পেমেন্ট মেথড নির্বাচন করুন</div><div class="cart-pad"><div class="space-y-2" id="paymentList"></div><input id="trxId" placeholder="TrxID (অনলাইন পেমেন্ট হলে)" class="cin"></div></div>
+<div class="cart-card"><div class="cart-sec"><span class="cs-ico">🧾</span>অর্ডারের সারাংশ</div><div class="cart-pad">
+<div class="sum-row"><span>পণ্যের মূল্য</span><b id="subShow">৳ 0</b></div>
+<div class="sum-row"><span>ডেলিভারি চার্জ</span><b id="delShow">৳ 80</b></div>
+<div class="sum-row text-green-600"><span>কুপন ছাড়</span><b id="discShow">- ৳ 0</b></div>
+<div class="sum-total"><span>সর্বমোট</span><span id="grandTotal2" class="grad-text">৳ 0</span></div></div></div>
+<button onclick="placeOrder()" class="w-full btn-order py-4 text-[17px] mt-1" id="checkoutOrderBtn">✅ অর্ডার করুন / Place Order</button>
+<button onclick="requireLogin('cart')&&orderWA()" class="w-full btn-wa py-3.5 text-sm mt-2">💬 Whatsapp এ অর্ডার করুন</button>
+<div class="trust-row"><div><span>🚚</span>দ্রুত ডেলিভারি</div><div><span>✅</span>১০০% অরিজিনাল</div><div><span>🔒</span>নিরাপদ পেমেন্ট</div></div>
+</div>
+</div>
+
+<div id="page-auth" class="hide px-3 pt-2">
+<div class="grad rounded-3xl p-5 text-white text-center shadow-xl"><div class="w-16 h-16 mx-auto rounded-full bg-white/25 flex items-center justify-center text-3xl"><i class="fa fa-user-lock"></i></div><h2 id="authTitle" class="font-bold text-[22px] mt-2">লগইন করুন</h2><p class="text-[13px] opacity-90">অর্ডার করতে অ্যাকাউন্ট দরকার</p></div>
+<div class="bg-white premium-card rounded-3xl p-4 mt-3">
+<div class="flex bg-pink-50 rounded-2xl p-1"><button id="tabLogin" onclick="authTab('login')" class="flex-1 py-2.5 rounded-xl font-bold text-sm">লগইন</button><button id="tabReg" onclick="authTab('reg')" class="flex-1 py-2.5 rounded-xl font-bold text-sm">নতুন অ্যাকাউন্ট</button></div>
+<div id="gBtnBox" class="mt-4 flex justify-center"></div>
+<button id="gFallback" onclick="googleLogin()" class="w-full mt-4 py-3 rounded-2xl border-2 font-bold text-sm bg-white flex items-center justify-center gap-2"><i class="fa-brands fa-google text-red-500 text-lg"></i> Google দিয়ে চালিয়ে যান</button>
+<div id="gmailBox" class="hide mt-3 bg-gray-50 rounded-2xl p-3"><input id="gName" placeholder="আপনার নাম" class="w-full border-2 rounded-xl px-3 py-2.5 text-sm bg-white"><input id="gEmail" type="email" placeholder="yourname@gmail.com" class="w-full border-2 rounded-xl px-3 py-2.5 mt-2 text-sm bg-white"><button onclick="gmailContinue()" class="w-full btn-order py-2.5 mt-2 text-sm"><i class="fa-brands fa-google"></i> Gmail দিয়ে চালিয়ে যান</button></div>
+<div class="flex items-center gap-2 my-4 text-gray-400 text-xs font-bold"><span class="flex-1 h-px bg-gray-200"></span>অথবা ইমেইল দিয়ে<span class="flex-1 h-px bg-gray-200"></span></div>
+<div id="regFields" class="hide"><label class="text-sm font-bold">আপনার নাম *</label><input id="rName" class="w-full border-2 rounded-xl px-3 py-3 mt-1 mb-3 text-sm"><label class="text-sm font-bold">মোবাইল নাম্বার *</label><input id="rPhone" inputmode="tel" class="w-full border-2 rounded-xl px-3 py-3 mt-1 mb-3 text-sm"></div>
+<label class="text-sm font-bold">ইমেইল *</label><input id="aEmail" type="email" class="w-full border-2 rounded-xl px-3 py-3 mt-1 mb-3 text-sm" placeholder="example@email.com">
+<label class="text-sm font-bold">পাসওয়ার্ড * (কমপক্ষে ৬ অক্ষর)</label><input id="aPass" type="password" class="w-full border-2 rounded-xl px-3 py-3 mt-1 text-sm">
+<p id="authMsg" class="text-xs font-bold text-red-600 mt-2 min-h-[16px]"></p>
+<button id="authSubmit" onclick="submitAuth()" class="w-full btn-order py-3.5 mt-2"></button>
+</div></div>
+
+<div id="page-vendors" class="hide px-3 pt-2">
+<div class="bg-white premium-card rounded-2xl p-4"><p class="text-[13px] text-gray-500"><span onclick="go('home','home')" class="cursor-pointer">Home</span> / <b class="text-gray-800">Sellers</b></p><div class="flex mt-3 rounded-full overflow-hidden border-2 bg-white"><input id="vSearch" oninput="renderVendors()" placeholder="Search by shop name..." class="flex-1 px-4 py-2.5 text-sm bg-transparent"><span class="grad text-white px-5 flex items-center">🔍</span></div><p class="text-[12px] text-gray-500 mt-2">মোট ভেন্ডর: <b id="vendorCount">0</b></p></div>
+<div id="vendorList" class="mt-3 space-y-3"></div>
+<button onclick="go('vendor','vendor')" class="btn-vendor mt-4"><i class="fa fa-handshake"></i> আপনিও ভেন্ডর হোন - আবেদন করুন</button>
+</div>
+<div id="page-store" class="hide px-3 pt-2"><div id="storeBox"></div></div>
+<div id="page-myshop" class="hide px-3 pt-2"><div id="myShopBox"></div></div>
+<div id="vSheet" class="hide fixed inset-0 z-[120] bg-black/50 flex items-end justify-center" onclick="if(event.target===this)closeVSheet()"><div id="vSheetBody" class="bg-white w-full max-w-[480px] max-h-[92vh] overflow-y-auto rounded-t-3xl p-4"></div></div>
+
+<div id="page-orders" class="hide px-3 pt-2"><h2 class="font-bold text-lg">📦 My Order</h2><div id="orderList" class="mt-3 space-y-2"></div></div>
+
+<div id="page-account" class="hide px-3 pt-2">
+<div id="accHero" class="grad rounded-3xl p-4 text-white flex items-end gap-3 relative overflow-hidden" style="min-height:158px;background-size:cover;background-position:center;box-shadow:0 12px 28px rgba(60,40,120,.22)"><div class="relative shrink-0"><img id="profilePic" src="" class="w-[78px] h-[78px] rounded-full object-cover border-4 border-white shadow-lg bg-white/20 hidden"><div id="profilePlaceholder" class="w-[78px] h-[78px] rounded-full bg-white/30 border-4 border-white flex items-center justify-center text-3xl">👤</div><label id="accCam" class="hide absolute -bottom-1 -right-1 bg-white text-pink-600 w-7 h-7 rounded-full flex items-center justify-center text-[13px] shadow-lg cursor-pointer border">📷<input type="file" id="profileInput" accept="image/*" class="hidden" onchange="uploadProfilePic(event)"></label></div><div class="min-w-0" style="text-shadow:0 2px 8px rgba(0,0,0,.45)"><p class="text-xs opacity-90">Hello</p><b id="accNameTop" class="text-[19px] block truncate">A M IMRAN</b></div></div>
+<div class="mt-4 bg-white rounded-2xl p-4 premium-card">
+<div id="accView"><h3 class="font-bold mb-1">👤 আমার প্রোফাইল</h3>
+<div class="mt-1 text-[14px]"><div class="flex py-2 border-b"><span class="w-[110px] text-gray-500">নাম</span><b id="accName">A M IMRAN</b></div><div class="flex py-2 border-b"><span class="w-[110px] text-gray-500">ফোন</span><b id="accPhoneShow">01700000000</b></div><div class="flex py-2 border-b"><span class="w-[110px] text-gray-500">ঠিকানা</span><b id="accAddrShow" class="break-words min-w-0">-</b></div><div class="flex py-2 border-b"><span class="w-[110px] text-gray-500">ইমেইল</span><b id="accEmailShow" class="break-all">-</b></div><div class="flex py-2"><span class="w-[110px] text-gray-500">লগইন</span><b id="accProvider">-</b></div></div>
+<button onclick="toggleCustomize(true)" class="w-full btn-order py-2.5 text-sm mt-3">✨ কাস্টমাইজ</button>
+<button onclick="go('orders','orders')" class="w-full btn-cart py-2.5 text-sm mt-2">📦 আমার অর্ডার দেখুন</button>
+<button id="accVendorBtn" onclick="go('vendor','vendor')" class="btn-vendor py-2.5 text-sm mt-2">🏪 ভেন্ডর শীপ নিন</button>
+<button onclick="logout()" class="w-full mt-3 py-3 rounded-2xl font-bold border-2 border-red-200 text-red-600 bg-red-50"><i class="fa fa-right-from-bracket"></i> লগ আউট</button></div>
+<div id="accEdit" class="hide"><h3 class="font-bold mb-2">✨ প্রোফাইল কাস্টমাইজ</h3><p class="text-[12px] text-gray-500 mb-2">ওপরের 📷 আইকনে চাপ দিয়ে প্রোফাইল ছবি বদলাতে পারবেন।</p><label class="text-sm font-bold">নাম</label><input id="accNameInput" value="A M IMRAN" class="w-full border-2 rounded-xl px-3 py-2.5 mt-1 mb-2 text-sm" oninput="updateProfileName(this.value)"><label class="text-sm font-bold">ফোন</label><input id="accPhoneInput" value="01700000000" class="w-full border-2 rounded-xl px-3 py-2.5 mt-1 mb-2 text-sm"><label class="text-sm font-bold">ঠিকানা</label><input id="accAddrInput" class="w-full border-2 rounded-xl px-3 py-2.5 mt-1 mb-2 text-sm"><button onclick="saveProfile()" class="w-full btn-order py-2.5 text-sm mt-1">💾 প্রোফাইল সেভ করুন</button><button onclick="toggleCustomize(false)" class="w-full btn-cart py-2.5 text-sm mt-2">বাতিল</button></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="fab-wrap" id="supportWrap">
+<div id="supportMenu" class="hide support-pop"><div class="sp-head"><b data-t="supTitle" class="text-[15px]">🎧 লাইভ সাপোর্ট</b><p data-t="supSub" class="text-[12px] opacity-90">আমরা সাহায্য করতে প্রস্তুত</p></div>
+<button onclick="supportWA()" class="sp-item wa"><i data-ico="supWa" class="fa-brands fa-whatsapp"></i> <span data-t="supWa">WhatsApp এ চ্যাট করুন</span></button>
+<button onclick="supportTG()" class="sp-item tg border-t"><i data-ico="supTg" class="fa-brands fa-telegram"></i> <span data-t="supTg">Telegram এ চ্যাট করুন</span></button></div>
+<button onclick="toggleSupport()" class="fab" aria-label="Live Support"><span id="fabIcon" class="fab-in"></span></button>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto bg-white flex justify-around items-end pb-2.5 pt-1 z-50 rounded-t-[20px] border-t border-pink-100 shadow-[0_-4px_20px_rgba(0,0,0,.08)]">
+<button onclick="goCategory()" class="nav-item" id="nav-category"><i data-ico="nCat" class="fa fa-bars"></i><span data-t="nCat">Category</span></button>
+<button onclick="orderWA()" class="nav-item" id="nav-whatsapp"><i data-ico="nWa" class="fa-brands fa-whatsapp"></i><span data-t="nWa">Whatsapp</span></button>
+<button onclick="go('home','home')" class="w-[70px] flex flex-col items-center"><div class="home-btn" id="nav-home-btn"><i data-ico="nHome" class="fa fa-home text-[20px]"></i><span class="text-[11px]" data-t="nHome">Home</span></div></button>
+<button onclick="go('cart','cart')" class="nav-item" id="nav-cart"><i data-ico="nCart" class="fa fa-shopping-cart"></i><span><span data-t="nCart">Cart</span> (<span id="cartBottom">0</span>)</span></button>
+<button onclick="go('account','account')" class="nav-item" id="nav-account"><i data-ico="nAcc" class="fa fa-user"></i><span data-t="nAcc">Account</span></button>
+</nav>
+
+<script>
+try{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const PH="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#fce7f3"/><text x="200" y="225" font-size="90" text-anchor="middle">🛍️</text></svg>');
+const phFor=e=>'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#fce7f3"/><text x="200" y="235" font-size="110" text-anchor="middle">'+e+'</text></svg>');
+window.imgErr=el=>{el.onerror=null;el.src=phFor(el.dataset.e||'🛍️')};
+const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||'null')||d}catch(e){return d}};
+let settings=LS('sk_settings',{c1:'#ec4899',c2:'#7c3aed',shopName:'Mr SK Shop',slogan:'Premium Verified Shop',logo:'SK',notice:'Mr SK Shop - প্রিমিয়াম শপে আপনাকে স্বাগতম - সারা বাংলাদেশে হোম ডেলিভারি চলছে',bannerTitle:'সেরা প্রোডাক্ট<br>সেরা দামে কিনুন',bannerSub:'১০০% অরিজিনাল • দ্রুত ডেলিভারি',banners:['https://images.unsplash.com/photo-1542838132-92c53300491e?w=800','https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800','https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800'],bkashNum:'01700000000',whatsapp:'8801700000000',telegram:'',googleClientId:'',fbUrl:'https://kinbo-f8c24-default-rtdb.firebaseio.com',phone:'01700000000',delInside:80,delOutside:120,site:1,order:1,showOrderBtn:1,showCartBtn:1,showCallBtn:1,showWA:1,showBuyNow:1,showVendor:1,orderBtnText:'🛒 অর্ডার করুন',orderBtnBg:'linear-gradient(135deg,#ec4899,#7c3aed)',checkoutBtnText:'✅ অর্ডার করুন / Place Order',payments:[{name:'Cash On Delivery',desc:'পণ্য হাতে পেয়ে টাকা দিন',icon:'🚚',on:1},{name:'bKash',desc:'বিকাশে পেমেন্ট করুন',icon:'📱',on:1},{name:'Nagad',desc:'নগদে পেমেন্ট করুন',icon:'🧡',on:1},{name:'Rocket',desc:'রকেটে পেমেন্ট করুন',icon:'🚀',on:1},{name:'Upay',desc:'উপায়ে পেমেন্ট করুন',icon:'💙',on:1}]});
+let products=LS('sk_products',[
+{id:1,name:'সুন্দরবনের চাকের মধু | Sundarbans Natural Honey',price:1300,old:1500,cat:'Honey',img:'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500',desc:'১০০% খাঁটি সুন্দরবনের চাকের মধু।',code:'P0001',rating:4.9,rcount:128,stock:20,inStock:1},
+{id:2,name:'Pure Ghee (ঘি) - প্রিমিয়াম',price:950,old:1900,cat:'Ghee',img:'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500',desc:'খাঁটি গাওয়া ঘি।',code:'P0002',rating:4.8,rcount:96,stock:15,inStock:1},
+{id:3,name:'মিশ্র ফুলের মধু | Mix Flower Honey',price:1400,old:1500,cat:'Honey',img:'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500',desc:'মিশ্র ফুলের মধু।',code:'P0003',rating:4.7,rcount:84,stock:15,inStock:1},
+{id:4,name:'Black Seed Honey',price:1400,old:1900,cat:'Honey',img:'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500',desc:'কালোজিরা ফুলের মধু।',code:'P0004',rating:4.9,rcount:142,stock:25,inStock:1}
+]);
+let categories=LS('sk_categories',[{name:'Honey',img:'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=200'},{name:'Ghee',img:'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=200'},{name:'Super Foods',img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200'}]);
+let cart=LS('sk_cart',[]);let orders=LS('sk_orders',[]);let reviews=LS('sk_reviews',[{name:'Tahura Rahman',star:5,text:'প্রোডাক্ট অনেক ভালো, ডেলিভারি ফাস্ট ছিলো। ধন্যবাদ ❤️',date:'২ দিন আগে'}]);
+let vendors=LS('sk_vendors',[{name:'রফিকুল ইসলাম',shop:'সুন্দরবন অর্গানিক হাউস',phone:'01700000001',cat:'মধু / অর্গানিক',address:'খুলনা',status:'Approved',email:'',pass:''},{name:'নাজমা আক্তার',shop:'নাজমা ফ্যাশন',phone:'01700000002',cat:'ফ্যাশন / পোশাক',address:'ঢাকা',status:'Approved',email:'',pass:''}]);let profile=LS('sk_profile',{name:'অতিথি',phone:'',address:'',pic:''});let users=LS('sk_users',[]);let sessionEmail=LS('sk_session',null);let currentUser=sessionEmail?(users.find(u=>u.email==sessionEmail)||null):null;
+
+// ===== Built-in images (no internet needed) =====
+const mkImg=(emoji,a,b,w,h,fs)=>'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+a+'"/><stop offset="1" stop-color="'+b+'"/></linearGradient></defs><rect width="'+w+'" height="'+h+'" fill="url(#g)"/><circle cx="'+(w*0.82)+'" cy="'+(h*0.18)+'" r="'+(h*0.32)+'" fill="#fff" fill-opacity=".14"/><circle cx="'+(w*0.12)+'" cy="'+(h*0.9)+'" r="'+(h*0.28)+'" fill="#fff" fill-opacity=".12"/><text x="'+(w/2)+'" y="'+(h/2+fs*0.34)+'" font-size="'+fs+'" text-anchor="middle">'+emoji+'</text></svg>');
+const IMG={honey:mkImg('🍯','#fbbf24','#f97316',500,500,200),ghee:mkImg('🧈','#fde68a','#f59e0b',500,500,200),food:mkImg('🥗','#86efac','#16a34a',500,500,200),def:mkImg('🛍️','#f9a8d4','#a78bfa',500,500,200),
+cHoney:mkImg('🍯','#fbbf24','#f97316',200,200,90),cGhee:mkImg('🧈','#fde68a','#f59e0b',200,200,90),cFood:mkImg('🥗','#86efac','#16a34a',200,200,90),
+b1:mkImg('🛍️','#ec4899','#7c3aed',800,330,150),b2:mkImg('🎁','#f97316','#ec4899',800,330,150),b3:mkImg('🍯','#f59e0b','#db2777',800,330,150)};
+const isExt=u=>/unsplash\.com/i.test(String(u||''));
+const pickImg=(name,small)=>{const n=String(name||'').toLowerCase();if(n.includes('honey')||n.includes('মধু'))return small?IMG.cHoney:IMG.honey;if(n.includes('ghee')||n.includes('ঘি'))return small?IMG.cGhee:IMG.ghee;if(n.includes('food')||n.includes('খাবার'))return small?IMG.cFood:IMG.food;return IMG.def;};
+(function(){let ch=0;products.forEach(p=>{if(!p.img||isExt(p.img)){p.img=pickImg(p.cat+' '+p.name,false);ch=1;}});categories.forEach(c=>{if(!c.img||isExt(c.img)){c.img=pickImg(c.name,true);ch=1;}});if(!settings.banners||!settings.banners.length||settings.banners.some(isExt)){settings.banners=[IMG.b1,IMG.b2,IMG.b3];ch=1;}if(ch)try{localStorage.setItem('sk_products',JSON.stringify(products));localStorage.setItem('sk_categories',JSON.stringify(categories));localStorage.setItem('sk_settings',JSON.stringify(settings));}catch(e){}})();
+let afterLogin='',currentPage='home',currentCat='all',selectedStar=5,detailStar=5,couponCode='',bannerIdx=0,bannerTimer=null,detailQtyVal=1,detailSize='';
+function save(){try{localStorage.setItem('sk_settings',JSON.stringify(settings));localStorage.setItem('sk_products',JSON.stringify(products));localStorage.setItem('sk_categories',JSON.stringify(categories));localStorage.setItem('sk_cart',JSON.stringify(cart));localStorage.setItem('sk_orders',JSON.stringify(orders));localStorage.setItem('sk_reviews',JSON.stringify(reviews));localStorage.setItem('sk_vendors',JSON.stringify(vendors));localStorage.setItem('sk_profile',JSON.stringify(profile));}catch(e){console.log(e)}}
+let notifTimer;const NT_ICO={ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',warn:'<svg viewBox="0 0 24 24"><path d="M12 9v4.5M12 17v.01"/><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',err:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',info:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.8v.01"/></svg>'};
+const ntType=i=>/⚠|⛔|📏|✍/.test(i)?'warn':/🚫|❌/.test(i)?'err':/🔐|📋|ℹ/.test(i)?'info':'ok';
+function showNotif(t,m,i='✓'){let n=$('proNotif');const k=ntType(String(i));$('notifTitle').innerText=t;$('notifMsg').innerText=m;$('notifIcon').innerHTML=NT_ICO[k];n.classList.remove('show','n-ok','n-warn','n-err','n-info');n.classList.add('n-'+k);void n.offsetWidth;n.classList.add('show');clearTimeout(notifTimer);notifTimer=setTimeout(hideNotif,3400);}
+window.hideNotif=function(){$('proNotif').classList.remove('show');}
+function applyTheme(){applyExtra();document.documentElement.style.setProperty('--c1',settings.c1||'#ec4899');document.documentElement.style.setProperty('--c2',settings.c2||'#7c3aed');document.documentElement.style.setProperty('--orderBg',settings.orderBtnBg||'linear-gradient(135deg,#ec4899,#7c3aed)');$('pageTitle').innerText=settings.shopName;$('shopName').innerText=settings.shopName;$('sideShopName').innerText=settings.shopName;$('shopSlogan').innerText=settings.slogan;setLogo();$('noticeText').innerText=settings.notice;applyNotice();if(settings.banners&&settings.banners.length)$('bannerImg').src=settings.banners[bannerIdx%settings.banners.length];
+
+$('checkoutOrderBtn').innerText=settings.checkoutBtnText||'✅ অর্ডার করুন / Place Order';
+let dv=$('coDivision'),old=dv.value;dv.innerHTML=`<option value="in">ঢাকার ভিতরে - ${settings.delInside} টাকা</option><option value="out">ঢাকার বাহিরে - ${settings.delOutside} টাকা</option>`;dv.value=old||'in';
+loadProfile();renderBannerDots();
+const off=settings.site==0;$('mainApp').classList.toggle('hide',off);$('siteOff').classList.toggle('hide',!off);$('searchBar').classList.toggle('hide',off||currentPage!='home');}
+function renderBannerDots(){let b=settings.banners||[];$('bannerDots').innerHTML=b.map((_,i)=>`<div class="dot ${i==bannerIdx?'active':''}" onclick="goBanner(${i})"></div>`).join('');}
+window.goBanner=function(i){bannerIdx=i;if(settings.banners&&settings.banners[i])$('bannerImg').src=settings.banners[i];renderBannerDots();startSlider();}
+window.nextBanner=function(manual){if(!settings.banners||!settings.banners.length)return;if(manual!==true&&currentPage!='home')return;bannerIdx=(bannerIdx+1)%settings.banners.length;$('bannerImg').src=settings.banners[bannerIdx];renderBannerDots();if(manual===true)startSlider();}
+window.prevBanner=function(){if(!settings.banners||!settings.banners.length)return;bannerIdx=(bannerIdx-1+settings.banners.length)%settings.banners.length;$('bannerImg').src=settings.banners[bannerIdx];renderBannerDots();startSlider();}
+function startSlider(){if(bannerTimer)clearInterval(bannerTimer);bannerTimer=setInterval(()=>{nextBanner();},3000);}
+function loadProfile(){$('accName').innerText=profile.name;$('accNameTop').innerText=profile.name;$('accPhoneShow').innerText=profile.phone||'-';$('accAddrShow').innerText=profile.address||'-';$('accNameInput').value=profile.name;$('accPhoneInput').value=profile.phone;$('accAddrInput').value=profile.address||'';$('accEmailShow').innerText=(currentUser&&currentUser.email)||'-';$('accProvider').innerText=currentUser?(currentUser.provider=='google'?'Google':'Email'):'-';if(profile.pic){$('profilePic').src=profile.pic;$('profilePic').classList.remove('hidden');$('profilePlaceholder').classList.add('hidden');}else{$('profilePic').classList.add('hidden');$('profilePlaceholder').classList.remove('hidden');}}
+window.uploadProfilePic=function(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=function(){profile.pic=r.result;save();syncUser();loadProfile();renderSideMenu();showNotif('ছবি আপডেট হয়েছে','আপনার প্রোফাইল ছবি যোগ হয়েছে','📷');};r.readAsDataURL(f);}
+window.toggleCustomize=function(on){const v=$('accView'),e=$('accEdit'),c=$('accCam');if(!v||!e)return;v.classList.toggle('hide',!!on);e.classList.toggle('hide',!on);if(c)c.classList.toggle('hide',!on);if(!on)loadProfile();else window.scrollTo({top:0,behavior:'smooth'});}
+window.updateProfileName=function(v){$('accName').innerText=v;$('accNameTop').innerText=v;}
+window.saveProfile=function(){profile.name=$('accNameInput').value||profile.name;profile.phone=$('accPhoneInput').value||profile.phone;profile.address=$('accAddrInput').value;save();syncUser();loadProfile();renderSideMenu();toggleCustomize(false);showNotif('প্রোফাইল সেভ হয়েছে','আপনার প্রোফাইল আপডেট হয়েছে','✅');}
+function starsHTML(n){let s='';for(let i=1;i<=5;i++)s+=i<=Math.round(n)?'★':'☆';return `<span class="star-small">${s}</span>`;}
+function setActiveNav(k){document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));if($('nav-'+k))$('nav-'+k).classList.add('active');}
+window.go=function(p,navKey){try{if(p=='vendor'){if(!currentUser){afterLogin='vendor';p='auth';navKey='account';showNotif('লগইন করুন','ভেন্ডর হতে আগে অ্যাকাউন্ট দরকার','🔐');}else if(myVendor()){p='myshop';navKey='account';}}if(p=='myshop'&&!currentUser){afterLogin='myshop';p='auth';navKey='account';}if(p=='account'&&!currentUser){afterLogin='account';p='auth';navKey='account';}['home','detail','cart','orders','account','reviews','vendor','vendors','auth','store','myshop'].forEach(x=>{let el=$('page-'+x);if(el)el.classList.add('hide');});currentPage=p;$('searchBar').classList.toggle('hide',p!='home'||settings.site==0);$('page-'+p).classList.remove('hide');if(p=='cart'){fillCheckout();renderCart();renderPayments();renderCartLogin();}if(p=='orders')renderOrders();if(p=='reviews')renderAllReviews();if(p=='vendors')renderVendors();if(p=='store')renderStore();if(p=='myshop')renderMyShop();if(p=='account'){updVendorUI();toggleCustomize(false);}if(p=='auth')initAuth();if(p=='home')renderCats();if(p=='vendor'&&currentUser){if(!$('vName').value)$('vName').value=currentUser.name||'';if(!$('vPhone').value)$('vPhone').value=currentUser.phone||'';}setActiveNav(navKey||p);window.scrollTo(0,0);}catch(e){console.log(e)}}
+window.goCategory=function(){go('home','category');setTimeout(()=>$('catRow').scrollIntoView({behavior:'smooth',block:'center'}),50);}
+window.toggleMenu=function(){renderSideMenu();$('sideMenu').classList.toggle('hide');}
+window.setCat=function(c){currentCat=c;const si=$('searchInput');if(si){si.value='';$('sbClear').classList.add('hide');}go('home','category');renderProducts();}
+window.setCatIdx=function(i){if(categories[i])setCat(categories[i].name);}
+window.setRevStar=function(n){selectedStar=n;document.querySelectorAll('#revStars .star').forEach((el,i)=>el.classList.toggle('active',i<n));}
+window.setDetailStar=function(n){detailStar=n;document.querySelectorAll('#detailStars .star').forEach((el,i)=>el.classList.toggle('active',i<n));}
+window.submitReview=function(){let text=$('revText').value.trim();if(!text){showNotif('রিভিউ লিখুন','প্রথমে মতামত লিখুন','✍️');return;}reviews.unshift({name:$('revName').value.trim()||profile.name,star:selectedStar,text,date:'এখনই'});save();renderReviews();renderAllReviews();$('revText').value='';showNotif('ধন্যবাদ! ⭐','আপনার রিভিউ পোস্ট হয়েছে','⭐');}
+window.submitDetailReview=function(pid){let text=$('detailRevText').value.trim();if(!text){showNotif('রিভিউ লিখুন','প্রথমে রিভিউ লিখুন','✍️');return;}reviews.unshift({name:$('detailRevName').value.trim()||profile.name,star:detailStar,text,productId:pid,date:'এখনই'});save();renderReviews();openDetail(pid);showNotif('রিভিউ পোস্ট হয়েছে','ধন্যবাদ!','⭐');}
+window.submitVendor=function(){if(!requireLogin('vendor'))return;if(myVendor()){go('myshop','account');return;}let n=$('vName').value.trim(),sh=$('vShop').value.trim(),p=$('vPhone').value.trim();if(!n||!sh||!p){showNotif('তথ্য বাকি আছে','নাম, শপ, মোবাইল পূরণ করুন','⚠️');return;}const app={id:'v'+Date.now(),owner:ownH(currentUser.email),name:n,shop:sh,phone:p,cat:$('vCat').value,address:$('vAddress').value,status:'Pending',email:currentUser.email,pass:''};vendors.unshift(app);fbPush('vendorApps/'+Date.now(),app);save();['vName','vShop','vPhone','vAddress'].forEach(i=>$(i).value='');showNotif('আবেদন সফল! 🏪','এডমিন অনুমোদন দিলে আপনার ভেন্ডর শীপ আইডি চালু হবে','🏪');updVendorUI();go('myshop','account');}
+const revCard=r=>`<div class="rev-c bg-white premium-card rounded-xl p-2.5"><div class="flex gap-2 items-center"><div class="w-7 h-7 grad rounded-full flex items-center justify-center text-white font-bold text-[12px] shrink-0">${esc(r.name).charAt(0)}</div><div class="text-[12.5px] leading-tight"><b>${esc(r.name)}</b> ${starsHTML(r.star)}</div></div><p class="text-[11.5px] text-gray-600 mt-1.5 leading-snug">${esc(r.text)}</p></div>`;
+function renderReviews(){const n=reviews.length,b=$('revBtnSub');if(b)b.innerText=n?n+' টি রিভিউ • পড়ুন ও নিজের রিভিউ দিন':'প্রথম রিভিউটি আপনিই দিন';}
+function renderAllReviews(){const c=$('revCountTxt');if(c)c.innerText=reviews.length+' টি রিভিউ';$('allReviews').innerHTML=reviews.map(r=>{const p=r.productId?products.find(x=>x.id==r.productId):null;return revCard(r)+(p?`<p class="text-[10px] font-bold text-pink-600 -mt-1 mb-1 px-3">🛍️ ${esc(p.name)}</p>`:'')}).join('')||'<p class="text-center text-gray-500 py-8 bg-white rounded-2xl">এখনো কোনো রিভিউ নেই</p>';}
+function renderCats(){const row=$('catRow');if(!row)return;const old=row.scrollLeft,vOn=currentPage=='vendors',act=currentPage=='home'?currentCat:'__';const chip=(on,fn,t)=>`<button onclick="${fn}" class="cat-chip ${on?'on':''}">${t}</button>`;row.innerHTML=chip(act=='all',"setCat('all')",'সব')+categories.map((c,i)=>chip(act==c.name,'setCatIdx('+i+')',esc(c.name))).join('')+(settings.showVendor==0?'':chip(vOn,"go('vendors','category')",'🏪 Vendor Ship'));row.scrollLeft=old;const on=row.querySelector('.cat-chip.on');if(on)row.scrollTo({left:Math.max(0,on.offsetLeft-(row.clientWidth-on.offsetWidth)/2),behavior:'smooth'});}
+function renderPayments(){let list=(settings.payments||[]).filter(p=>p.on);$('paymentList').innerHTML=list.map((p,i)=>`<label class="flex items-center gap-3 border-2 rounded-2xl p-3 bg-white cursor-pointer ${i==0?'border-pink-300 bg-pink-50':''}">${payIco(p)}<span class="flex-1"><b>${esc(p.name)}</b><span class="text-[13px] text-gray-500 block">${esc(p.desc)}</span>${p.number?`<span class="text-[13px] font-bold text-pink-600 block" onclick="copyNum('${esc(p.number)}',event)">📞 ${esc(p.number)} (${esc(p.ntype||'Personal')}) — কপি</span>`:''}</span><input type="radio" name="pay" value="${esc(p.name)}" ${i==0?'checked':''} class="w-5 h-5" onchange="payHL()"></label>`).join('')||'<p class="text-gray-400 text-sm">কোনো পেমেন্ট মেথড চালু নাই - অ্যাডমিন থেকে চালু করুন</p>';}
+window.payHL=function(){document.querySelectorAll('#paymentList label').forEach(l=>{let on=l.querySelector('input').checked;l.classList.toggle('border-pink-300',on);l.classList.toggle('bg-pink-50',on);});}
+window.renderProducts=function(){guardImgs();const norm=s=>String(s||'').toLowerCase().replace(/[\u200c\u200d]/g,'').replace(/\s+/g,' ').trim();const q=norm($('searchInput').value),tk=q?q.split(' ').filter(Boolean):[];let list;if(tk.length){const sc=p=>{const n=norm(p.name),c=norm(p.cat),cd=norm(p.code),d=norm(p.desc);let s=0;for(const w of tk){let h=0;if(n.includes(w)){h=3;if(n.split(/[\s|,()\-]+/).some(x=>x==w||x.startsWith(w)))h=4;}else if(c.includes(w))h=3;else if(cd.includes(w))h=2;else if(d.includes(w))h=1;if(!h)return 0;s+=h;}return s;};list=products.filter(p=>isLive(p)).map(p=>({p,s:sc(p)})).filter(x=>x.s>0);const so=$('sortSelect').value;if(so=='latest')list.sort((a,b)=>b.s-a.s);list=list.map(x=>x.p);}else{list=products.filter(p=>isLive(p)&&(currentCat=='all'||p.cat==currentCat));}let s=$('sortSelect').value;if(s=='low')list.sort((a,b)=>a.price-b.price);if(s=='high')list.sort((a,b)=>b.price-a.price);
+$('listTitle').innerText=tk.length?'🔍 "'+$('searchInput').value.trim()+'" — '+list.length+' টি পণ্য পাওয়া গেছে':(currentCat=='all'?'✨ All Products':'✨ '+currentCat);
+$('productGrid').innerHTML=list.map(pCard).join('')||'<p class="col-span-2 text-center text-gray-500 py-10 bg-white rounded-2xl">'+(tk.length?'এই নামে কোনো পণ্য পাওয়া যায়নি। অন্য শব্দ দিয়ে চেষ্টা করুন':'কোনো পণ্য পাওয়া যায়নি')+'</p>';}
+window.openDetail=function(id){let p=products.find(x=>x.id==id);if(!p)return;detailQtyVal=1;detailSize='';detailStar=5;$('detailCat').innerText=p.cat;let out=!p.inStock||p.stock<=0;let orderText=esc(settings.orderBtnText||'🛒 অর্ডার করুন');
+let actions=out?`<button class="w-full bg-gray-300 text-gray-500 py-4 rounded-2xl font-bold mt-3">⛔ স্টক শেষ</button>`:((settings.showCartBtn==0?'':`<button onclick="addDetail(${p.id})" class="w-full btn-cart py-4 mt-3">🛒 কার্টে যোগ করুন</button>`)+(settings.showBuyNow==0?'':`<button onclick="buyNow(${p.id})" class="w-full btn-buy py-4 mt-2">⚡ ${orderText}</button>`));
+$('detailBox').innerHTML=`${galleryHTML(p)}<h1 class="font-bold text-[21px] leading-tight mt-3">${esc(p.name)}</h1>${p.vendor?vTag(p):''}<div class="flex items-center gap-2 mt-1">${starsHTML(p.rating)} <span class="text-sm text-gray-500">${p.rating} / 5.0</span></div><p class="mt-2">${p.old>p.price?`<del class="text-gray-400 text-[18px]">৳${p.old}</del> `:''}<b class="text-[24px] grad-text">৳${p.price}</b></p><p class="mt-2 text-sm font-bold ${out?'text-red-600':'text-green-600'}">${out?'⛔ স্টক শেষ':'✓ স্টকে আছে - '+p.stock+'টি'}</p><div class="grad text-white inline-block px-4 py-1.5 mt-3 text-sm font-bold rounded-r-full">প্রোডাক্ট কোড : ${esc(p.code)}</div>${p.desc?`<div class="desc-card mt-3 bg-white rounded-2xl p-3.5 premium-card"><h4 class="font-bold text-[14px] mb-1">📝 বিবরণ</h4><p class="text-[13.5px] text-gray-600 leading-relaxed">${esc(p.desc)}</p></div>`:''}${sizeBox(p)}<div class="flex items-center gap-3 mt-4"><div class="flex items-center border-2 rounded-xl overflow-hidden"><button onclick="changeQtyDetail(-1)" class="w-10 h-11 bg-pink-50 text-xl font-bold">-</button><b id="detailQty" class="w-10 text-center">1</b><button onclick="changeQtyDetail(1)" class="w-10 h-11 bg-pink-50 text-xl font-bold">+</button></div></div>${actions}${settings.showWA!=0?`<button onclick="requireLogin('home')&&orderWA()" class="w-full btn-wa py-4 mt-2">💬 WhatsApp এ অর্ডার করুন</button>`:''}`;
+initGallery(p);let pr=reviews.filter(r=>r.productId==id);
+$('detailReviews').innerHTML=`<div class="bg-white premium-card rounded-2xl p-4 mt-4"><h3 class="font-bold">⭐ কাস্টমার রিভিউ (${pr.length})</h3><div class="space-y-2 mt-2">${pr.map(revCard).join('')||'<p class="text-sm text-gray-400">এখনো কেউ রিভিউ দেয়নি।</p>'}</div><div class="border-t mt-4 pt-3"><h4 class="font-bold text-sm">✍️ রিভিউ দিন</h4><input id="detailRevName" placeholder="আপনার নাম" class="w-full border-2 rounded-xl px-3 py-2.5 mt-2 text-sm"><div id="detailStars" class="flex gap-1 mt-2"><span class="star active" onclick="setDetailStar(1)">★</span><span class="star active" onclick="setDetailStar(2)">★</span><span class="star active" onclick="setDetailStar(3)">★</span><span class="star active" onclick="setDetailStar(4)">★</span><span class="star active" onclick="setDetailStar(5)">★</span></div><textarea id="detailRevText" placeholder="এই প্রোডাক্ট কেমন লেগেছে?" class="w-full border-2 rounded-xl px-3 py-2.5 mt-2 text-sm" rows="2"></textarea><button onclick="submitDetailReview(${p.id})" class="w-full btn-order py-3 mt-2">⭐ রিভিউ পোস্ট করুন</button></div></div>`;go('detail','home');}
+window.changeQtyDetail=function(d){let p=null;detailQtyVal=Math.max(1,detailQtyVal+d);$('detailQty').innerText=detailQtyVal;}
+window.addToCart=function(id,goCart,q,mi,size){q=q||1;let p=products.find(x=>x.id==id);if(!p)return;if(needSize(p)&&!size){showNotif('সাইজ বেছে নিন','প্রোডাক্ট খুলে আপনার সাইজ সিলেক্ট করুন','📏');openDetail(id);return;}if(!p.inStock||p.stock<=0){showNotif('স্টক শেষ','এই প্রোডাক্ট এখন স্টকে নাই','⛔');return;}if(mi==null)mi=firstImgIdx(p);let have=cart.filter(c=>c.id==id).reduce((a,c)=>a+c.qty,0);if(have+q>p.stock){showNotif('স্টক সীমিত','সর্বোচ্চ '+p.stock+'টি অর্ডার করা যাবে','⚠️');q=p.stock-have;if(q<=0)return;}let f=cart.find(c=>c.id==id&&(c.mi||0)==mi&&(c.size||'')==(size||''));if(f)f.qty+=q;else{const it={id,qty:q,mi,th:'',size:size||''};cart.push(it);const m=mediaOf(p)[mi];mkThumb(m&&m.t!='v'?m.s:p.img,t=>{it.th=t;save();if(currentPage=='cart')renderCart();});}save();updateCart();showNotif('কার্টে যোগ হয়েছে','প্রোডাক্টটি কার্টে যোগ হয়েছে','🛒');if(goCart){if(requireLogin('cart'))go('cart','cart');}}
+window.buyNow=function(id){const p=products.find(x=>x.id==id);if(needSize(p)&&!detailSize){sizeWarn();return;}addToCart(id,false,detailQtyVal,selImg(),detailSize);if(requireLogin('cart'))go('cart','cart');}
+window.addDetail=function(id){const p=products.find(x=>x.id==id);if(needSize(p)&&!detailSize){sizeWarn();return;}addToCart(id,false,detailQtyVal,selImg(),detailSize);}
+window.cartRemove=function(i){cart.splice(i,1);save();updateCart();renderCart();};
+window.cartQty=function(i,d){let f=cart[i];if(!f)return;let p=products.find(x=>x.id==f.id);let tot=cart.filter(c=>c.id==f.id).reduce((a,c)=>a+c.qty,0);if(d>0&&p&&tot+d>p.stock){showNotif('স্টক সীমিত','সর্বোচ্চ '+p.stock+'টি অর্ডার করা যাবে','⚠️');return;}f.qty+=d;if(f.qty<1)cart.splice(i,1);save();updateCart();renderCart();}
+function updateCart(){let t=cart.reduce((a,b)=>a+b.qty,0);$('cartTop').innerText=t;$('cartBottom').innerText=t;}
+function fillCheckout(){if(!currentUser)return;if(!$('coName').value)$('coName').value=profile.name||'';if(!$('coPhone').value)$('coPhone').value=profile.phone||'';if(!$('coAddress').value)$('coAddress').value=profile.address||'';}
+const subTotal=()=>cart.reduce((a,c)=>{let p=products.find(x=>x.id==c.id);return a+(p?p.price*c.qty:0)},0);
+const delCharge=()=>$('coDivision').value=='out'?Number(settings.delOutside):Number(settings.delInside);
+const getCoupon=c=>(settings.coupons||[{code:'SK10',type:'percent',value:10,on:1},{code:'EID50',type:'flat',value:50,on:1}]).find(x=>x.on!=0&&String(x.code).toUpperCase()==c);
+const discount=()=>{let s=subTotal();let c=couponCode&&getCoupon(couponCode);if(!c)return 0;return c.type=='percent'?Math.round(s*Number(c.value)/100):Math.min(Number(c.value),s)};
+window.applyCoupon=function(){let v=($('couponInput').value||'').trim().toUpperCase();let m=$('couponMsg');let c=v&&getCoupon(v);if(c){couponCode=v;m.className='text-xs font-bold mt-1 text-green-600';m.innerText='✅ '+v+' - '+(c.type=='percent'?c.value+'% ছাড়!':c.value+' টাকা ছাড়!');}else{couponCode='';m.className='text-xs font-bold mt-1 text-red-600';m.innerText='❌ ভুল কুপন';}renderCart();}
+window.renderCart=function(){let del=cart.length?delCharge():0,disc=discount();
+$('cartBody').classList.toggle('hide',!cart.length);
+const nq=cart.reduce((a,c)=>a+c.qty,0);$('cartCount').innerText=nq?nq+' টি পণ্য • '+cart.length+' আইটেম':'কার্ট এখন খালি';
+$('cartSummary').innerHTML=cart.length?cart.map((c,i)=>{let p=products.find(x=>x.id==c.id);let lt=p?p.price*c.qty:0;return `<div class="ci"><img src="${esc(cartImg(c,p))}" onerror="imgErr(this)" data-e="${p?catEmoji(p.cat):'🛍️'}" class="ci-img" alt=""><div class="ci-info"><h4>${p?esc(p.name):'Product'}</h4>${c.size?`<span class="ci-size">📏 সাইজ: ${esc(c.size)}</span>`:''}<p class="ci-price">${p&&p.old>p.price?`<del>৳${p.old}</del> `:''}<b>৳ ${p?p.price:0}</b></p><div class="ci-row"><div class="ci-qty"><button onclick="cartQty(${i},-1)">−</button><b>${c.qty}</b><button onclick="cartQty(${i},1)">+</button></div><b class="ci-total grad-text">৳ ${lt}</b></div></div><button class="ci-del" onclick="cartRemove(${i})" aria-label="Remove">✕</button></div>`}).join(''):`<div class="cart-empty"><div class="ce-ico">🛒</div><h3>আপনার কার্ট খালি</h3><p>পছন্দের প্রোডাক্ট বেছে নিয়ে অর্ডার করুন</p><button onclick="go('home','home')" class="btn-order">🛍️ শপিং শুরু করুন</button></div>`;
+$('subShow').innerText='৳ '+subTotal();$('delShow').innerText='৳ '+del;$('discShow').innerText='- ৳ '+disc;$('grandTotal2').innerText='৳ '+(subTotal()+del-disc);}
+window.placeOrder=function(){
+try{
+if(settings.order==0){showNotif('অর্ডার বন্ধ আছে','এই মুহূর্তে অর্ডার নেওয়া হচ্ছে না','⛔');return;}
+if(!requireLogin('cart'))return; if(currentUser&&isBlockedLocal(currentUser.email)){forceOut();return;}
+let name=$('coName').value.trim(),phone=$('coPhone').value.trim(),addr=$('coAddress').value.trim();
+if(!name||!phone||!addr){showNotif('তথ্য বাকি আছে','Name / নাম, Phone, Address পূরণ করুন','⚠️');return;}
+if(cart.length==0){showNotif('কার্ট খালি','প্রথমে প্রোডাক্টে "অর্ডার করুন" বাটনে ক্লিক করুন','🛒');go('home','home');return;}
+let payEl=document.querySelector('input[name="pay"]:checked');let pay=payEl?payEl.value:'Cash On Delivery';
+let total=subTotal()+delCharge()-discount();
+let oid='SK'+Date.now().toString().slice(-6);
+let newOrder={id:oid,email:currentUser.email,name:name,phone:phone,address:addr,deliveryTime:$('coDeliveryTime').value,pay:pay,trx:$('trxId').value||'',total:total,ts:Date.now(),sub:subTotal(),del:delCharge(),disc:discount(),coupon:couponCode,division:$('coDivision').value,lines:cart.map(c=>{let p=products.find(x=>x.id==c.id);return {id:c.id,name:p?p.name:'Product',price:p?p.price:0,qty:c.qty,mi:c.mi||0,size:c.size||'',img:lineImgOf(c,p),vendor:(p&&p.vendor)||''}}),items:cart.map(c=>{let p=products.find(x=>x.id==c.id);return p?p.name+(c.size?' ('+c.size+')':'')+' x'+c.qty:'Product x'+c.qty}).join(', '),status:'Pending',date:new Date().toLocaleString()};
+orders.unshift(newOrder);fbPush('orders/'+oid,newOrder);
+cart=[];couponCode='';$('couponInput').value='';$('couponMsg').innerText='';
+save();updateCart();
+showNotif('অর্ডার সফল! 🎉','Order ID: '+oid+' - ১ দিনের মধ্যে ডেলিভারি হবে','✅');
+go('orders','orders');
+}catch(e){alert('অর্ডার করতে সমস্যা হয়েছে, আবার চেষ্টা করুন: '+e.message)}
+}
+window.orderWA=function(){let msg='Assalamu Alaikum '+settings.shopName+'! Order korte chai';if(cart.length)msg+=':\n'+cart.map(c=>{let p=products.find(x=>x.id==c.id);return '- '+(p?p.name:'Product')+(c.size?' ('+c.size+')':'')+' x'+c.qty}).join('\n');window.open('https://wa.me/'+String(settings.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank');}
+function renderOrders(){fbStatus();let box=$('orderList');let mine=orders.filter(o=>!o.email||(currentUser&&o.email==currentUser.email));if(!mine.length){box.innerHTML='<p class="text-center text-gray-500 py-10 bg-white rounded-2xl">এখনো কোনো অর্ডার নাই / No orders yet</p>';return;}box.innerHTML=mine.map(o=>`<div class="bg-white premium-card p-3.5 rounded-2xl"><div class="flex justify-between"><b>#${esc(o.id)}</b><span class="bg-pink-100 text-pink-700 px-2 py-0.5 rounded-full text-xs font-bold">${esc(o.status)}</span></div><p class="text-sm mt-1">${esc(o.items)}</p><p class="text-xs text-gray-500">${esc(o.name)} • ${esc(o.phone)} • ${esc(o.address)} • ${esc(o.deliveryTime||'')}</p><p class="font-bold grad-text">মোট / Total: ৳${o.total} | ${esc(o.pay)}</p></div>`).join('');}
+
+// ===== Accounts / Auth =====
+function catEmoji(n){return ({'Honey':'🍯','Ghee':'🧈','Super Foods':'🥗'})[n]||'🛍️';}
+function payIco(p){const n=String(p.name).toLowerCase();if(/^(data:image|https?:)/.test(p.icon||''))return `<span class="pay-ico" style="background:#fff;border:1px solid #eee;overflow:hidden"><img src="${esc(p.icon)}" style="width:100%;height:100%;object-fit:contain"></span>`;let c='#ec4899',g=esc(p.icon);if(n.includes('bkash')){c='#e2136e';g='bKash';}else if(n.includes('nagad')){c='#f6921e';g='Nagad';}else if(n.includes('rocket')){c='#8c3494';g='Rocket';}else if(n.includes('upay')){c='#0b5ed7';g='Upay';}else if(n.includes('cash')||n.includes('cod')){c='#16a34a';g='<i class="fa fa-truck text-[20px]"></i>';}return `<span class="pay-ico" style="background:${c}">${g}</span>`;}
+const guestProfile=()=>({name:'অতিথি',phone:'',address:'',pic:''});
+function saveUsers(){try{localStorage.setItem('sk_users',JSON.stringify(users));localStorage.setItem('sk_session',JSON.stringify(currentUser?currentUser.email:null));}catch(e){console.log(e)}}
+function applyUserToProfile(u){profile={name:u.name||'',phone:u.phone||'',address:u.address||'',pic:u.pic||''};save();}
+function syncUser(){if(currentUser){currentUser.name=profile.name;currentUser.phone=profile.phone;currentUser.address=profile.address;currentUser.pic=profile.pic;saveUsers();pushUser(currentUser);}}
+async function hashPw(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('sk|'+s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}catch(e){return 'p:'+btoa(unescape(encodeURIComponent(s)));}}
+let authMode='login',gInit=false;
+const authErr=t=>{$('authMsg').innerText=t;};
+window.authTab=function(m){authMode=m;const reg=m=='reg';$('regFields').classList.toggle('hide',!reg);$('authTitle').innerText=reg?'নতুন অ্যাকাউন্ট খুলুন':'লগইন করুন';$('authSubmit').innerHTML=reg?'<i class="fa fa-user-plus"></i> অ্যাকাউন্ট তৈরি করুন':'<i class="fa fa-right-to-bracket"></i> লগইন করুন';$('tabLogin').className='flex-1 py-2.5 rounded-xl font-bold text-sm '+(reg?'text-gray-500':'grad text-white shadow');$('tabReg').className='flex-1 py-2.5 rounded-xl font-bold text-sm '+(reg?'grad text-white shadow':'text-gray-500');authErr('');}
+function initAuth(){authTab(authMode);const cid=settings.googleClientId;if(cid&&window.google&&google.accounts&&google.accounts.id){try{if(!gInit){google.accounts.id.initialize({client_id:cid,callback:onGoogle});gInit=true;}$('gBtnBox').innerHTML='';google.accounts.id.renderButton($('gBtnBox'),{theme:'outline',size:'large',text:'continue_with',shape:'pill',width:300});$('gFallback').classList.add('hide');return;}catch(e){console.log(e)}}$('gFallback').classList.remove('hide');}
+function onGoogle(r){try{const b=JSON.parse(decodeURIComponent(escape(atob(r.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))));finishLogin({name:b.name||b.email.split('@')[0],email:String(b.email).toLowerCase(),pic:b.picture||'',provider:'google'});}catch(e){showNotif('গুগল লগইন ব্যর্থ','আবার চেষ্টা করুন','⚠️');}}
+window.googleLogin=function(){$('gmailBox').classList.toggle('hide');}
+window.gmailContinue=function(){const e=$('gEmail').value.trim().toLowerCase(),n=$('gName').value.trim();if(!/^[^\s@]+@gmail\.com$/.test(e)){showNotif('ভুল Gmail','সঠিক Gmail ঠিকানা দিন','⚠️');return;}finishLogin({name:n||e.split('@')[0],email:e,provider:'google'});}
+function finishLogin(info){if(isBlockedLocal(info.email)){authErr('এই অ্যাকাউন্টটি সাসপেন্ড করা হয়েছে');return;}let u=users.find(x=>x.email==info.email);if(!u){u={name:info.name||'',email:info.email,phone:info.phone||'',address:'',pic:info.pic||'',pass:info.pass||'',provider:info.provider||'email',created:Date.now()};users.push(u);}else if(info.pic&&!u.pic)u.pic=info.pic;currentUser=u;saveUsers();applyUserToProfile(u);loadProfile();renderSideMenu();$('coName').value=profile.name;$('coPhone').value=profile.phone;$('coAddress').value=profile.address;['aEmail','aPass','rName','rPhone','gEmail','gName'].forEach(i=>{if($(i))$(i).value='';});$('gmailBox').classList.add('hide');showNotif('স্বাগতম! 🎉','আপনি সফলভাবে লগইন করেছেন','✅');pushUser(u);checkBlock();const n=afterLogin||'home';afterLogin='';go(n,n);}
+async function doRegister(){const name=$('rName').value.trim(),phone=$('rPhone').value.replace(/\D/g,''),email=$('aEmail').value.trim().toLowerCase(),pw=$('aPass').value;if(!name||!phone||!email||!pw){authErr('সব তথ্য পূরণ করুন');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){authErr('সঠিক ইমেইল দিন');return;}if(phone.length<10){authErr('সঠিক মোবাইল নাম্বার দিন');return;}if(pw.length<6){authErr('পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে');return;}if(users.find(u=>u.email==email)){authErr('এই ইমেইলে আগেই অ্যাকাউন্ট আছে - লগইন করুন');return;}finishLogin({name,email,phone,pass:await hashPw(pw),provider:'email'});}
+async function doLogin(){const email=$('aEmail').value.trim().toLowerCase(),pw=$('aPass').value;if(!email||!pw){authErr('ইমেইল ও পাসওয়ার্ড দিন');return;}const vd=vendors.find(v=>v.email&&v.email==email&&v.pass&&v.status=='Approved');if(vd&&vd.pass===await hashPw(pw)){finishLogin({name:vd.name||vd.shop,email,phone:vd.phone,provider:'vendor'});return;}const u=users.find(x=>x.email==email);if(!u){authErr('এই ইমেইলে কোনো অ্যাকাউন্ট নেই - নতুন অ্যাকাউন্ট খুলুন');return;}if(!u.pass){authErr('এই অ্যাকাউন্ট Google দিয়ে খোলা - Google দিয়ে লগইন করুন');return;}if(u.pass!==await hashPw(pw)){authErr('পাসওয়ার্ড ভুল');return;}finishLogin({email});}
+window.submitAuth=function(){if(authMode=='reg')doRegister();else doLogin();}
+window.requireLogin=function(next){if(currentUser)return true;afterLogin=next||'home';showNotif('অ্যাকাউন্ট দরকার','অর্ডার করতে আগে লগইন / রেজিস্টার করুন','🔐');go('auth','account');return false;}
+window.loginForCart=function(){afterLogin='cart';go('auth','account');}
+window.logout=function(){currentUser=null;profile=guestProfile();saveUsers();save();['coName','coPhone','coAddress'].forEach(i=>$(i).value='');loadProfile();renderSideMenu();if(!$('sideMenu').classList.contains('hide'))$('sideMenu').classList.add('hide');showNotif('লগ আউট হয়েছে','আবার আসবেন 👋','👋');go('home','home');}
+function renderCartLogin(){const b=$('cartLoginNote');if(currentUser){b.classList.add('hide');return;}b.classList.remove('hide');b.innerHTML='<div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 mb-3 text-center"><b class="text-[14px] block text-amber-800">🔐 অর্ডার করতে অ্যাকাউন্ট লাগবে</b><button onclick="loginForCart()" class="btn-order px-5 py-2 mt-2 text-sm"><i class="fa fa-right-to-bracket"></i> লগইন / রেজিস্টার করুন</button></div>';}
+function renderSideMenu(){const u=currentUser;$('sideName').innerText=u?u.name:'স্বাগতম, অতিথি';$('sideSub').innerText=u?(u.email||u.phone):'লগইন করে অর্ডার করুন';$('sideAvatar').innerHTML=u&&u.pic?`<img src="${esc(u.pic)}">`:(u?esc((u.name||'U').charAt(0).toUpperCase()):'<i class="fa fa-user"></i>');$('sideFoot').innerHTML=u?'<button onclick="logout()" class="w-full py-3 rounded-2xl font-bold border-2 border-red-200 text-red-600 bg-red-50 flex items-center justify-center gap-2"><i class="fa fa-right-from-bracket"></i> লগ আউট</button>':'<button onclick="sideLogin()" class="w-full btn-order py-3 flex items-center justify-center gap-2"><i class="fa fa-right-to-bracket"></i> লগইন / রেজিস্টার</button>';document.querySelectorAll('.side-item[data-p]').forEach(el=>el.classList.toggle('on',el.dataset.p==currentPage));updVendorUI();}
+window.sideGo=function(p,k){toggleMenu();go(p,k);}
+window.sideLogin=function(){toggleMenu();afterLogin='home';authMode='login';go('auth','account');}
+window.sideSupport=function(){toggleMenu();toggleSupport(true);}
+// ===== Vendors list =====
+const bdNum=p=>{p=String(p||'').replace(/\D/g,'');return p.startsWith('880')?p:(p.startsWith('0')?'88'+p:p);};
+// ===== Live support =====
+window.toggleSupport=function(f){const m=$('supportMenu');const show=typeof f=='boolean'?f:m.classList.contains('hide');m.classList.toggle('hide',!show);$('fabIcon').innerHTML=show?XSVG:supIc();}
+function tgLink(){const t=String(settings.telegram||settings.whatsapp||'').trim().replace(/^@/,'');return /^\+?\d+$/.test(t)?'https://t.me/+'+t.replace(/\D/g,''):'https://t.me/'+t;}
+window.supportWA=function(){window.open('https://wa.me/'+String(settings.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent('Assalamu Alaikum '+settings.shopName+'! Amar ektu shahajjo dorkar.'),'_blank');toggleSupport(false);}
+window.supportTG=function(){window.open(tgLink(),'_blank');toggleSupport(false);}
+if(currentUser)applyUserToProfile(currentUser);else profile=guestProfile();
+window.guardImgs=function(){setTimeout(()=>{document.querySelectorAll('img[data-e]').forEach(i=>{if(i.src&&!i.src.startsWith('data:')&&(!i.complete||!i.naturalWidth))imgErr(i);});},3500);};
+
+// ===== Built-in icons (no internet needed) =====
+const ICO={
+'bars':'<path d="M4 6h16M4 12h16M4 18h16"/>',
+'xmark':'<path d="M6 6l12 12M18 6 6 18"/>',
+'home':'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+'shopping-cart':'<circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 8H6"/>',
+'user':'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+'headset':'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M19 20a4 4 0 0 1-4 2h-2"/>',
+'box':'<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>',
+'star':'<path d="m12 3 2.7 5.7 6.3.8-4.6 4.3 1.2 6.2L12 17l-5.6 3 1.2-6.2L3 9.5l6.3-.8z"/>',
+'store':'<path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 12v8h14v-8M10 20v-5h4v5"/>',
+'handshake':'<circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14a5 5 0 0 1 5 5"/>',
+'chevron-right':'<path d="m9 6 6 6-6 6"/>',
+'user-lock':'<circle cx="10" cy="8" r="4"/><path d="M2 21a8 8 0 0 1 10-7.7"/><rect x="14" y="15" width="8" height="6" rx="1.5"/><path d="M16 15v-2a2 2 0 0 1 4 0v2"/>',
+'user-plus':'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/>',
+'right-to-bracket':'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>',
+'right-from-bracket':'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
+'table-cells-large':'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+'location-dot':'<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+'phone':'<path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/>',
+'circle-check':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+'truck':'<path d="M2 6h11v10H2zM13 9h5l3 3v4h-8z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+'search':'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+'bell':'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21a2 2 0 0 0 4 0"/>',
+'whatsapp':'<path d="M3 21l1.6-4.8A9 9 0 1 1 8 19.5z"/><path d="M9 9c0 3.5 3 6.5 6.5 6.5l1.2-1.7-2.2-1-1 .8a5 5 0 0 1-2.4-2.4l.8-1-1-2.2z"/>',
+'telegram':'<path d="M21 3 3 10.5l6 2.2 2.2 6.3 3-4 5 3.7z"/><path d="M9 12.7 21 3"/>',
+'google':'<text x="12" y="18" font-size="18" font-weight="800" text-anchor="middle" fill="currentColor" stroke="none" font-family="Arial,sans-serif">G</text>'
+};
+ICO['cart-shopping']=ICO['shopping-cart'];ICO['house']=ICO['home'];ICO['magnifying-glass']=ICO['search'];
+const svgOf=n=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+(ICO[n]||'<circle cx="12" cy="12" r="3"/>')+'</svg>';
+function icoUp(){document.querySelectorAll('i[class*="fa"]:not(.ic)').forEach(el=>{const cls=Array.from(el.classList);const name=cls.find(c=>c.startsWith('fa-')&&!['fa-solid','fa-brands','fa-regular'].includes(c));if(!name)return;const keep=cls.filter(c=>!c.startsWith('fa'));el.className='ic '+keep.join(' ');el.innerHTML=svgOf(name.slice(3));});applyIcons();}
+icoUp();try{let q=0;const ob=new MutationObserver(()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;ob.disconnect();icoUp();ob.observe(document.body,{childList:true,subtree:true});});});ob.observe(document.body,{childList:true,subtree:true});}catch(e){}
+
+// ===== Keyboard fix: hide bottom bar + support button while typing =====
+const isTxt=e=>e&&/^(INPUT|TEXTAREA)$/.test(e.tagName)&&!/checkbox|radio|file|button|submit/.test(e.type||'');
+document.addEventListener('focusin',e=>{if(isTxt(e.target))document.body.classList.add('kb');});
+document.addEventListener('focusout',()=>{setTimeout(()=>{if(!isTxt(document.activeElement))document.body.classList.remove('kb');},150);});
+let _st;window.dSearch=function(){clearTimeout(_st);_st=setTimeout(renderProducts,180);};
+// ===== Support icon =====
+const SUPSVG='<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="shb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ead7ff"/></linearGradient><linearGradient id="she" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#f1e1ff"/><stop offset="1" stop-color="#c9a6f5"/></linearGradient><filter id="shd" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="2.2" stdDeviation="1.6" flood-color="#2e0a5c" flood-opacity=".55"/></filter></defs><g filter="url(#shd)"><path d="M15 35v-5a17 17 0 0 1 34 0v5" fill="none" stroke="url(#shb)" stroke-width="5" stroke-linecap="round"/><rect x="9.5" y="32" width="11" height="18" rx="5.5" fill="url(#she)"/><rect x="43.5" y="32" width="11" height="18" rx="5.5" fill="url(#she)"/><path d="M49 50c0 6.5-5.5 8.5-13 8.5" fill="none" stroke="url(#shb)" stroke-width="3" stroke-linecap="round"/><rect x="29.5" y="55" width="9" height="6" rx="3" fill="url(#she)"/></g><rect x="12" y="35" width="2.6" height="9" rx="1.3" fill="#fff" opacity=".9"/><rect x="46" y="35" width="2.6" height="9" rx="1.3" fill="#fff" opacity=".9"/><circle cx="50" cy="14" r="4.2" fill="#22c55e" stroke="#fff" stroke-width="2"/></svg>';
+const XSVG='<svg class="x" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+// ===== Load admin published data (data.json + optional Firebase site.json) =====
+function applyData(d){if(!d||!d.version)return;const lv=Number(localStorage.getItem('sk_data_ver')||0);if(d.version<=lv)return;if(d.settings)settings=Object.assign({},settings,d.settings);if(d.products)products=d.products;if(d.categories)categories=d.categories;if(d.vendors){const keep=vendors.filter(v=>v.status=='Pending'&&v.id&&!d.vendors.some(x=>x.id==v.id));vendors=d.vendors.concat(keep);}vendors.forEach(v=>{if(!v.id)v.id=vidOf(v)});if(d.reviews)reviews=d.reviews;save();localStorage.setItem('sk_data_ver',String(d.version));applyTheme();renderCats();renderProducts();renderReviews();renderPayments();updVendorUI();}
+
+// ===== entry popup (customised from admin) =====
+let _popShown=0;
+const popSig=p=>[p.title,p.text,String((p.img||'').length),p.btnText,p.btnLink].join('|');
+window.closeEntryPop=function(){const e=document.getElementById('entryPop');if(!e)return;e.classList.add('out');setTimeout(()=>e.remove(),230);};
+window.popAction=function(l){closeEntryPop();l=String(l||'').trim();if(!l)return;const m={home:['home','home'],cart:['cart','cart'],orders:['orders','orders'],account:['account','account'],reviews:['reviews','home'],vendors:['vendors','category']};if(m[l]){go(m[l][0],m[l][1]);return;}if(l=='whatsapp'){orderWA();return;}if(/^https?:\/\//i.test(l)){window.open(l,'_blank');return;}if(/^(tel:|mailto:)/i.test(l)){location.href=l;return;}const c=categories.find(x=>x.name==l);if(c)setCat(c.name);};
+window.showEntryPop=function(){if(_popShown)return;const p=settings.popup;if(!p||!p.on||settings.site==0)return;if(!(p.title||p.text||p.img))return;const f=p.freq||'always',sig=popSig(p),today=new Date().toDateString();
+try{if(f=='session'&&sessionStorage.getItem('sk_pop_s')==sig)return;if(f=='daily'&&localStorage.getItem('sk_pop_d')==sig+'|'+today)return;if(f=='once'&&localStorage.getItem('sk_pop_o')==sig)return;}catch(e){}
+_popShown=1;setTimeout(()=>{if(document.getElementById('entryPop'))return;try{if(f=='session')sessionStorage.setItem('sk_pop_s',sig);if(f=='daily')localStorage.setItem('sk_pop_d',sig+'|'+today);if(f=='once')localStorage.setItem('sk_pop_o',sig);}catch(e){}
+const hasImg=!!(p.img&&/^(data:image|https?:|\/)/.test(p.img));const d=document.createElement('div');d.id='entryPop';d.onclick=e=>{if(e.target===d)closeEntryPop();};
+d.innerHTML=`<div class="ep-card ${hasImg?'':'noimg'}"><button class="ep-x" aria-label="Close" onclick="closeEntryPop()"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>${hasImg?`<img class="ep-img" src="${esc(p.img)}" alt="" onerror="this.remove()">`:''}${(p.title||p.text||p.showBtn)?`<div class="ep-body">${p.title?`<div class="ep-title">${esc(p.title)}</div>`:''}${p.text?`<div class="ep-text">${esc(p.text)}</div>`:''}${p.showBtn?`<button class="ep-btn" onclick="popAction(${esc(JSON.stringify(String(p.btnLink||'')))})">${esc(p.btnText||'দেখুন')}</button><button class="ep-skip" onclick="closeEntryPop()">পরে দেখব</button>`:''}</div>`:''}</div>`;
+document.body.appendChild(d);},Math.max(0,Number(p.delay)||0)*1000+250);};
+
+window.hideSplash=function(){setTimeout(()=>{const s=document.getElementById('bootSplash');if(s){s.classList.add('out');setTimeout(()=>s&&s.remove(),450);}if(window.showEntryPop)showEntryPop();},140);};
+(function(){try{fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null).then(d=>{applyData(d);const u=fbU();if(u)return fetch(u+'/site.json',{cache:'no-store'}).then(r=>r.json()).then(applyData)}).catch(()=>{}).then(()=>hideSplash())}catch(e){hideSplash()}})();
+// ===== Admin customization helpers =====
+const isImgV=v=>/^(data:image|https?:|\/)/.test(v||'');
+function applyIcons(){const I=settings.icons||{};document.querySelectorAll('[data-ico]').forEach(el=>{const k=el.dataset.ico,v=I[k]||'';if(el._init&&el._cv===v)return;if(!el._o)el._o=[el.className,el.innerHTML];el._init=1;el._cv=v;if(!v){el.className=el._o[0];el.innerHTML=el._o[1];return}el.className='ic cust';el.innerHTML=isImgV(v)?'<img src="'+esc(v)+'" alt="">':esc(v)})}
+function applyLabels(){const L=settings.labels||{};document.querySelectorAll('[data-t]').forEach(el=>{if(el._d==null)el._d=el.textContent;el.textContent=L[el.dataset.t]||el._d});document.querySelectorAll('[data-tp]').forEach(el=>{if(el._d==null)el._d=el.placeholder;el.placeholder=L[el.dataset.tp]||el._d})}
+function supIc(){const v=(settings.icons||{}).support;return v?(isImgV(v)?'<img src="'+esc(v)+'" style="width:100%;height:100%;object-fit:cover" alt="">':'<span style="font-size:26px">'+esc(v)+'</span>'):SUPSVG}
+
+// ===== notice button image + speed =====
+function fitNotice(){const t=$('noticeText');if(!t)return;const sp=Math.min(10,Math.max(1,Number(settings.noticeSpeed)||5));const w=t.scrollWidth||900;t.style.animationDuration=Math.max(3,w/(sp*10)).toFixed(1)+'s';}
+function applyNotice(){const nb=$('noticeBtn'),im=$('noticeImg'),v=settings.noticeImg,has=!!(v&&/^(data:image|https?:|\/)/.test(v));if(nb&&im){if(has){im.onload=()=>{fitTop();fitNotice();};im.src=v;im.classList.remove('hide');}else{im.classList.add('hide');im.removeAttribute('src');}nb.classList.toggle('has-img',has);}requestAnimationFrame(()=>{fitNotice();fitTop();});}
+window.addEventListener('resize',fitNotice);window.addEventListener('load',fitNotice);
+
+// ===== logo: remove plain background (white or any solid colour) =====
+const _lgCache={};
+function logoClean(src,cb){if(_lgCache[src]){cb(_lgCache[src]);return;}const im=new Image();if(!/^data:/.test(src))im.crossOrigin='anonymous';
+im.onload=()=>{try{const w0=im.naturalWidth,h0=im.naturalHeight;if(!w0||!h0)throw 0;const k=Math.min(1,700/Math.max(w0,h0)),W=Math.max(1,Math.round(w0*k)),H=Math.max(1,Math.round(h0*k));const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(im,0,0,W,H);const d=x.getImageData(0,0,W,H),p=d.data;
+const px=(X,Y)=>{const o=(Y*W+X)*4;return[p[o],p[o+1],p[o+2],p[o+3]]};const cs=[px(0,0),px(W-1,0),px(0,H-1),px(W-1,H-1)];
+if(cs.filter(a=>a[3]<20).length>=3){_lgCache[src]=src;cb(src);return;}
+const op=cs.filter(a=>a[3]>=200);if(op.length<3)throw 0;const bg=[0,1,2].map(i=>Math.round(op.reduce((s,a)=>s+a[i],0)/op.length));
+const dist=(o)=>Math.hypot(p[o]-bg[0],p[o+1]-bg[1],p[o+2]-bg[2]);
+if(op.some(a=>Math.hypot(a[0]-bg[0],a[1]-bg[1],a[2]-bg[2])>60))throw 0;
+const T=42,seen=new Uint8Array(W*H),st=[];const push=(X,Y)=>{if(X<0||Y<0||X>=W||Y>=H)return;const n=Y*W+X;if(seen[n])return;if(dist(n*4)>T)return;seen[n]=1;st.push(n)};
+for(let X=0;X<W;X++){push(X,0);push(X,H-1)}for(let Y=0;Y<H;Y++){push(0,Y);push(W-1,Y)}
+while(st.length){const n=st.pop(),X=n%W,Y=(n/W)|0;p[n*4+3]=0;push(X+1,Y);push(X-1,Y);push(X,Y+1);push(X,Y-1);}
+for(let Y=1;Y<H-1;Y++)for(let X=1;X<W-1;X++){const n=Y*W+X;if(seen[n])continue;if(seen[n-1]||seen[n+1]||seen[n-W]||seen[n+W]){const dd=dist(n*4);if(dd<T*2.4)p[n*4+3]=Math.round(255*Math.max(0,Math.min(1,(dd-T)/(T*1.4))));}}
+x.putImageData(d,0,0);let minX=W,minY=H,maxX=0,maxY=0;for(let Y=0;Y<H;Y++)for(let X=0;X<W;X++){if(p[(Y*W+X)*4+3]>12){if(X<minX)minX=X;if(X>maxX)maxX=X;if(Y<minY)minY=Y;if(Y>maxY)maxY=Y;}}
+let out=c;if(maxX>minX&&maxY>minY){const cw=maxX-minX+1,ch=maxY-minY+1,c2=document.createElement('canvas');c2.width=cw;c2.height=ch;c2.getContext('2d').drawImage(c,minX,minY,cw,ch,0,0,cw,ch);out=c2;}
+const r=out.toDataURL('image/png');_lgCache[src]=r;cb(r);}catch(e){cb(null);}};
+im.onerror=()=>cb(null);im.src=src;}
+
+function setLogo(){const lg=(settings.icons||{}).logo,b=$('logoBox'),pl=$('logoPlate'),nb=$('nameBox'),has=!!(lg&&isImgV(lg));if(has){b.onload=fitTop;b.classList.remove('fallback-blend');if(b.dataset.orig!==lg){b.dataset.orig=lg;logoClean(lg,r=>{if(b.dataset.orig!==lg)return;if(r){b.src=r;}else{b.classList.add('fallback-blend');b.src=lg;}b.classList.remove('hide');fitTop();});}b.classList.remove('hide');}else{b.classList.add('hide');b.removeAttribute('src');delete b.dataset.orig}if(pl)pl.classList.toggle('has-logo',has);if(nb)nb.classList.toggle('hide',has);fitTop();}
+function applyExtra(){const ah=$('accHero');if(ah){const pb=String(settings.profileBanner||'').replace(/"/g,'%22');ah.style.backgroundImage=pb?`linear-gradient(180deg,rgba(0,0,0,.02) 35%,rgba(0,0,0,.5)),url("${pb}")`:''}const H=settings.hide||{},tg=(ids,h)=>ids.forEach(i=>$(i)&&$(i).classList.toggle('hide',!!h));tg(['bannerBox'],H.banner);tg(['topCatsH','catRow'],H.cats);tg(['revHead','homeReviews','revBtn','revForm'],H.reviews);document.body.style.background=settings.bg||'';document.body.classList.toggle('ba-left',settings.btnAlign=='left');$('shell').style.background=settings.bg||'';const rt=document.documentElement.style,nv=x=>(x==null||x==='')?null:x;rt.setProperty('--r',(nv(settings.radius)||16)+'px');rt.setProperty('--br',(nv(settings.btnRadius)||14)+'px');let cs=$('customCss');if(!cs){cs=document.createElement('style');cs.id='customCss';document.head.appendChild(cs)}cs.textContent=settings.customCss||'';applyLabels();renderFooter();icoUp();const f=$('fabIcon');if(f&&$('supportMenu').classList.contains('hide'))f.innerHTML=supIc();}
+// ===== Home page footer (customised from admin) =====
+const FT_D={on:1,title:'STAY CONNECTED',text:'কোনো প্রকাশ সমস্যায় পড়লে টেলিগ্রাম এ যোগাযোগ করুন। দ্রুত সমাধান পাবেন।',socials:[{type:'facebook',on:1,url:''},{type:'telegram',on:1,url:''},{type:'youtube',on:1,url:''},{type:'email',on:1,url:''}],supTitle:'SUPPORT CENTER',helpTitle:'Help Line [9am - 12pm]',helpSub:'টেলিগ্রাম সাপোর্ট',helpLink:'',links:[{t:'About Us',u:'',body:''},{t:'Terms & Conditions',u:'',body:''},{t:'Privacy Policy',u:'',body:''},{t:'Refund & Return Policy',u:'',body:''},{t:'Delete Account Policy',u:'',body:''}],copy:'',bg:'#2b1161',accent:'#7c3aed'};
+const FT_ICO={facebook:'<path fill="currentColor" stroke="none" d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8z"/>',telegram:'<path d="M21 3 3 10.5l6 2.2 2.2 6.3 3-4 5 3.7z"/><path d="M9 12.7 21 3"/>',youtube:'<rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor" stroke="none"/><path d="M10 9l5 3-5 3z" fill="var(--ftbg,#2b1161)" stroke="none"/>',email:'<rect x="3" y="5" width="18" height="14" rx="2.5" fill="currentColor" stroke="none"/><path d="m3.5 7.5 8.5 6 8.5-6" stroke="var(--ftbg,#2b1161)" stroke-width="2"/>',whatsapp:'<path d="M3 21l1.6-4.8A9 9 0 1 1 8 19.5z"/><path d="M9 9c0 3.5 3 6.5 6.5 6.5l1.2-1.7-2.2-1-1 .8a5 5 0 0 1-2.4-2.4l.8-1-1-2.2z"/>',instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor"/>'};
+const ftCfg=()=>Object.assign({},FT_D,settings.footer||{});
+function ftUrl(s){let u=String(s.url||'').trim();if(!u){if(s.type=='telegram')return tgLink();if(s.type=='whatsapp'&&settings.whatsapp)return 'https://wa.me/'+String(settings.whatsapp).replace(/\D/g,'');return '';}if(s.type=='email'&&u.includes('@')&&!/^mailto:/i.test(u))return 'mailto:'+u;if(!/^(https?:|mailto:|tel:)/i.test(u)){if(s.type=='telegram'&&!u.includes('.'))return 'https://t.me/'+u.replace(/^@/,'');return 'https://'+u;}return u;}
+function ftGo(u){if(!u)return;if(/^(mailto:|tel:)/i.test(u))location.href=u;else window.open(u,'_blank');}
+window.ftSocial=function(i){const s=(ftCfg().socials||[])[i];if(s)ftGo(ftUrl(s));};
+window.ftHelp=function(){const f=ftCfg();let u=String(f.helpLink||'').trim();if(!u)u=tgLink();else if(!/^(https?:|mailto:|tel:)/i.test(u))u=/^\+?\d+$/.test(u)?'https://wa.me/'+u.replace(/\D/g,''):(u.includes('.')?'https://'+u:'https://t.me/'+u.replace(/^@/,''));ftGo(u);};
+window.ftSheetClose=function(){const e=document.getElementById('ftSheet');if(e)e.remove();};
+window.ftLink=function(i){const l=(ftCfg().links||[])[i];if(!l)return;const u=String(l.u||'').trim();if(u){if(/^(https?:|mailto:|tel:)/i.test(u)){ftGo(u);return;}if(/^(home|cart|orders|account|reviews|vendors)$/.test(u)){popAction(u);return;}}
+ftSheetClose();const d=document.createElement('div');d.id='ftSheet';d.onclick=e=>{if(e.target===d)ftSheetClose();};d.innerHTML=`<div class="fs-b"><div class="flex items-center"><h3 class="flex-1">${esc(l.t)}</h3><button onclick="ftSheetClose()" class="w-8 h-8 rounded-full bg-gray-100 font-bold">✕</button></div><p>${esc(l.body||'এই তথ্য শীঘ্রই যোগ করা হবে।')}</p></div>`;document.body.appendChild(d);};
+function renderFooter(){const el=$('homeFooter');if(!el)return;const f=ftCfg();if(f.on==0){el.classList.add('hide');el.innerHTML='';return;}el.classList.remove('hide');
+const soc=(f.socials||[]).map((s,i)=>s.on==0?'':`<button class="ft-sb" aria-label="${esc(s.type)}" onclick="ftSocial(${i})"><svg viewBox="0 0 24 24">${FT_ICO[s.type]||FT_ICO.telegram}</svg></button>`).join('');
+const lk=(f.links||[]).filter(l=>l&&l.t).map((l,i)=>`<button onclick="ftLink(${(f.links||[]).indexOf(l)})">${esc(l.t)}</button>`).join('');
+const cp=f.copy||('@ '+new Date().getFullYear()+' '+(settings.shopName||'')+' | All Rights Reserved');
+el.innerHTML=`<div class="ft" style="background:${esc(f.bg||'#2b1161')};--ftbg:${esc(f.bg||'#2b1161')};--fta:${esc(f.accent||'#7c3aed')}">${f.title?`<h3 class="ft-h">${esc(f.title)}</h3>`:''}${f.text?`<p class="ft-p">${esc(f.text)}</p>`:''}${soc?`<div class="ft-soc">${soc}</div>`:''}${f.supTitle?`<h3 class="ft-h" style="margin-top:30px">${esc(f.supTitle)}</h3>`:''}${(f.helpTitle||f.helpSub)?`<button class="ft-help" onclick="ftHelp()"><span class="ft-hi"><svg viewBox="0 0 24 24">${FT_ICO.telegram}</svg></span><span class="min-w-0"><b>${esc(f.helpTitle)}</b><small>${esc(f.helpSub)}</small></span></button>`:''}${lk?`<div class="ft-links">${lk}</div>`:''}<div class="ft-copy">${esc(cp)}</div></div>`;}
+window.copyNum=function(n,e){e&&e.preventDefault();try{navigator.clipboard.writeText(n)}catch(x){}showNotif('নাম্বার কপি হয়েছে',n,'📋')}
+// ===== Firebase (optional, REST) =====
+const FB_DEFAULT='https://kinbo-f8c24-default-rtdb.firebaseio.com';
+const fbU=()=>String(settings.fbUrl||FB_DEFAULT).trim().replace(/\/+$/,'');
+function pushUser(u){const x=fbU();if(!x||!u||!u.email)return;const pic=String(u.pic||'');fetch(x+'/users/'+ownH(u.email)+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:ownH(u.email),name:u.name||'',email:u.email,phone:u.phone||'',address:u.address||'',pic:pic.length<30000?pic:'',provider:u.provider||'email',created:u.created||Date.now(),last:Date.now()})}).catch(()=>{});}
+const isBlockedLocal=e=>{try{return !!JSON.parse(localStorage.getItem('sk_blocked')||'{}')[ownH(e)]}catch(x){return false}};
+async function isBlocked(e){if(!e)return false;if(isBlockedLocal(e))return true;const x=fbU();if(!x)return false;try{const r=await fetch(x+'/blocked/'+ownH(e)+'.json',{cache:'no-store'});return (await r.json())===true}catch(z){return false}}
+function forceOut(){if(!currentUser)return;try{logout()}catch(e){currentUser=null;saveUsers()}showNotif('অ্যাকাউন্ট সাসপেন্ড','আপনার অ্যাকাউন্টটি সাসপেন্ড করা হয়েছে। সাপোর্টে যোগাযোগ করুন','🚫');}
+async function checkBlock(){if(currentUser&&await isBlocked(currentUser.email))forceOut();}
+setTimeout(()=>{if(currentUser){pushUser(currentUser);checkBlock()}},1500);setInterval(checkBlock,45000);
+function fbPush(path,data){const u=fbU();if(!u)return;try{fetch(u+'/'+path+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{})}catch(e){}}
+function fbStatus(){const u=fbU();if(!u)return;orders.forEach(o=>{if(o.status=='Delivered'||o.status=='Cancelled')return;fetch(u+'/orders/'+o.id+'/status.json').then(r=>r.json()).then(st=>{if(typeof st=='string'&&st&&st!=o.status){o.status=st;save();if(currentPage=='orders')renderOrders()}}).catch(()=>{})})}
+window.addEventListener('storage',e=>{try{if(e.key=='sk_settings'&&e.newValue){settings=Object.assign({},settings,JSON.parse(e.newValue));applyTheme();renderPayments();renderProducts();renderCats()}if(e.key=='sk_products'&&e.newValue){products=JSON.parse(e.newValue);renderProducts()}if(e.key=='sk_categories'&&e.newValue){categories=JSON.parse(e.newValue);renderCats()}}catch(x){}});
+// ===== Product media gallery (many images + videos) =====
+const mediaOf=p=>{let m=Array.isArray(p.media)?p.media.filter(x=>x&&x.s):[];if(!m.length&&p.img)m=[{t:'i',s:p.img}];return m;};
+const needSize=p=>!!(p&&p.sizeOn&&Array.isArray(p.sizes)&&p.sizes.length);
+function sizeBox(p){if(!needSize(p))return '';return `<div id="sizeBox" class="mt-4 bg-white premium-card rounded-2xl p-3"><div class="flex items-center justify-between"><b class="text-[15px]">📏 সাইজ বেছে নিন <span class="text-red-500">*</span></b><span id="sizeSel" class="text-[12px] font-bold text-gray-400">সিলেক্ট করুন</span></div><div class="flex flex-wrap gap-2 mt-2.5">${p.sizes.map(z=>`<button type="button" data-sz="${esc(z)}" onclick="pickSize(this.dataset.sz)" class="size-chip">${esc(z)}</button>`).join('')}</div></div>`;}
+window.pickSize=function(z){detailSize=z;const b=$('sizeBox');if(b)b.classList.remove('warn');document.querySelectorAll('#sizeBox .size-chip').forEach(x=>x.classList.toggle('on',x.dataset.sz==z));const l=$('sizeSel');if(l){l.innerText='সাইজ: '+z;l.style.color='var(--c1)';}};
+function sizeWarn(){showNotif('সাইজ বেছে নিন','আগে আপনার সাইজ সিলেক্ট করুন','📏');const b=$('sizeBox');if(b){b.classList.remove('warn');void b.offsetWidth;b.classList.add('warn');b.scrollIntoView({behavior:'smooth',block:'center'});}}
+const firstImgIdx=p=>{const i=mediaOf(p).findIndex(x=>x.t!='v');return i<0?0:i;};
+const ytId=u=>{const m=String(u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);return m?m[1]:'';};
+let gal=[],galI=0,galCat='';
+const selImg=()=>{const m=gal[galI];if(m&&m.t!='v')return galI;const f=gal.findIndex(x=>x.t!='v');return f<0?0:f;};
+function mkThumb(src,cb){if(!src||!/^data:image/.test(src)){cb(src||'');return;}const im=new Image();im.onload=()=>{try{const k=Math.min(1,140/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.7));}catch(e){cb('')}};im.onerror=()=>cb('');im.src=src;}
+function cartImg(c,p){if(c.th)return c.th;if(!p)return '';const m=mediaOf(p)[c.mi||0];return m&&m.t!='v'?m.s:(p.img||'');}
+function lineImgOf(c,p){if(c.th)return c.th;if(!p)return '';const m=mediaOf(p)[c.mi||0];return m&&m.t!='v'&&/^https?:/.test(m.s)?m.s:'';}
+function galItem(m){if(m.t=='v'){const y=ytId(m.s);return y?`<iframe src="https://www.youtube.com/embed/${y}?rel=0" class="w-full h-full" style="border:0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`:`<video src="${esc(m.s)}" controls playsinline preload="metadata" class="w-full h-full" style="object-fit:contain;background:#000"></video>`;}return `<img src="${esc(m.s)}" onerror="imgErr(this)" data-e="${galCat}" class="w-full h-full object-cover" draggable="false" alt="">`;}
+function galThumb(m){if(m.t=='v')return '<span class="text-white text-xl bg-gray-800 w-full h-full flex items-center justify-center">▶</span>';return `<img src="${esc(m.s)}" onerror="imgErr(this)" data-e="${galCat}" class="w-full h-full object-cover" alt="">`;}
+function galleryHTML(p){gal=mediaOf(p);galI=0;galCat=catEmoji(p.cat);const many=gal.length>1;
+return `<div id="gal" class="relative"><div id="galWrap" class="relative w-full h-[300px] rounded-[20px] overflow-hidden shadow-lg bg-white" style="touch-action:pan-y"><div id="galMain" class="w-full h-full"></div>${many?`<button onclick="galShow(galI-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 w-8 h-8 rounded-full font-bold z-10 shadow">‹</button><button onclick="galShow(galI+1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 w-8 h-8 rounded-full font-bold z-10 shadow">›</button><span id="galCnt" class="absolute bottom-2 right-2 bg-black/60 text-white text-[11px] font-bold px-2 py-0.5 rounded-full z-10"></span>`:''}</div>${many?`<div id="galThumbs" class="flex gap-2 mt-2 overflow-x-auto no-scrollbar relative pb-1">${gal.map((m,i)=>`<div data-i="${i}" onclick="galShow(${i})" class="shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 cursor-pointer bg-pink-50 flex items-center justify-center" style="border-color:transparent">${galThumb(m)}</div>`).join('')}</div>`:''}<p id="galNote" class="text-[12px] font-bold text-pink-600 mt-1 text-center"></p></div>`;}
+window.galShow=function(i){if(!gal.length)return;galI=(i+gal.length)%gal.length;const m=gal[galI];$('galMain').innerHTML=galItem(m);const c=$('galCnt');if(c)c.innerText=(galI+1)+' / '+gal.length;const imgs=gal.filter(x=>x.t!='v').length;$('galNote').innerText=imgs>1?(m.t=='v'?'🎬 ভিডিও দেখছেন — অর্ডারে প্রথম ছবিটি যাবে':'✓ এই ছবিটি আপনার অর্ডারে যাবে'):'';const box=$('galThumbs');if(box){box.querySelectorAll('[data-i]').forEach(el=>{const on=el.dataset.i==galI;el.style.borderColor=on?'var(--c1)':'transparent';el.style.opacity=on?1:.65;});const t=box.querySelector('[data-i="'+galI+'"]');if(t)box.scrollTo({left:t.offsetLeft-box.clientWidth/2+t.clientWidth/2,behavior:'smooth'});}};
+function initGallery(p){galShow(0);const w=$('galWrap');if(!w)return;let x0=null;w.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});w.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>45)galShow(galI+(dx<0?1:-1));},{passive:true});}
+// ===== keep page content below the fixed header, whatever the logo size =====
+function fitTop(){const h=document.querySelector('.fixed-top');if(h)document.body.style.paddingTop=(h.offsetHeight+8)+'px';}
+window.addEventListener('resize',fitTop);window.addEventListener('load',fitTop);
+// ===== Vendor Ship: store pages, vendor dashboard =====
+const ownH=e=>{let h1=0x811c9dc5,h2=5381;for(const c of String(e||'').toLowerCase()){const k=c.charCodeAt(0);h1=Math.imul(h1^k,16777619)>>>0;h2=(Math.imul(h2,33)^k)>>>0;}return h1.toString(16)+h2.toString(16);};
+const vidOf=v=>'v'+Math.abs([...((v.shop||'')+'|'+(v.phone||''))].reduce((h,c)=>(Math.imul(h,31)+c.charCodeAt(0))|0,7)).toString(36);
+vendors.forEach(v=>{if(!v.id)v.id=vidOf(v);});
+let myV=LS('sk_myv',{}),myProds=LS('sk_myprods',[]),curStore='',vEdit=0,vTmp=[];
+const saveMy=()=>{try{localStorage.setItem('sk_myv',JSON.stringify(myV));localStorage.setItem('sk_myprods',JSON.stringify(myProds));return true;}catch(e){showNotif('স্টোরেজ ভরে গেছে','ছবি কম বা ছোট করুন','⚠️');return false;}};
+const allVendors=()=>vendors.map(v=>{const e=myV[v.id];return e&&(e.upd||0)>(v.upd||0)?Object.assign({},v,e):v;});
+const myVendor=()=>{if(!currentUser)return null;const o=ownH(currentUser.email);return allVendors().find(v=>v.owner==o||(v.email&&v.email==currentUser.email))||null;};
+const isLive=p=>!p.vendor||p.vstatus=='Approved';
+function vProds(vid){const map={};products.forEach(p=>{if(p.vendor==vid)map[p.id]=p;});myProds.forEach(m=>{if(m.vendor!=vid)return;const e=map[m.id];if(!e||(m.upd||0)>(e.upd||0))map[m.id]=m;});return Object.values(map).filter(p=>!p.deleted).sort((a,b)=>(b.upd||0)-(a.upd||0));}
+function vStats(v){const ps=vProds(v.id).filter(isLive);const rv=reviews.filter(r=>ps.some(p=>p.id==r.productId));const rating=rv.length?rv.reduce((a,r)=>a+Number(r.star||5),0)/rv.length:0;return{items:ps.length,reviews:rv.length,rating,ps};}
+const vAvatar=(v,px)=>`<div class="rounded-full border-4 border-white shadow-lg overflow-hidden grad flex items-center justify-center text-white font-extrabold" style="width:${px}px;height:${px}px;font-size:${Math.round(px/2.6)}px">${v.logo?`<img src="${esc(v.logo)}" class="w-full h-full object-cover" onerror="this.remove()" alt="">`:esc((v.shop||'V').charAt(0).toUpperCase())}</div>`;
+const vCheck='<span class="absolute bottom-1 right-0 w-6 h-6 rounded-full bg-blue-500 text-white text-[12px] font-bold flex items-center justify-center border-2 border-white">✓</span>';
+const vBanner=(v,h)=>`<div class="relative grad" style="height:${h}px">${v.banner?`<img src="${esc(v.banner)}" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" alt="">`:''}</div>`;
+const vStatsBox=st=>`<div class="grid grid-cols-2 bg-gray-50 rounded-xl mt-3 py-3 text-sm"><div class="border-r"><b class="text-indigo-600 text-[17px] mr-1">${st.items}</b><span class="text-gray-500 text-[12px] font-bold">ITEMS</span></div><div><b class="text-indigo-600 text-[17px] mr-1">${st.reviews}</b><span class="text-gray-500 text-[12px] font-bold">REVIEWS</span></div></div>`;
+const vRating=st=>`<div class="flex items-center justify-center gap-1.5 mt-1">${starsHTML(st.rating||0)}<span class="text-[13px] text-gray-500">(${st.reviews?st.rating.toFixed(1):'নতুন'})</span></div>`;
+function vTag(p){const v=allVendors().find(x=>x.id==p.vendor);return v?`<p onclick="event.stopPropagation();openStore('${esc(v.id)}')" class="text-[11px] text-indigo-600 font-bold cursor-pointer mt-0.5">🏪 ${esc(v.shop)}</p>`:'';}
+function pCard(p){const orderText=esc(settings.orderBtnText||'অর্ডার করুন'),out=!p.inStock||p.stock<=0;const btn=out?`<button class="pc-btn off" disabled>স্টক শেষ</button>`:(settings.showOrderBtn==0?`<button onclick="openDetail(${p.id})" class="pc-btn alt">বিস্তারিত দেখুন</button>`:`<button onclick="${needSize(p)?`openDetail(${p.id})`:`addToCart(${p.id},true)`}" class="pc-btn">${orderText}</button>`);return `<div class="pc"><div class="pc-img" onclick="openDetail(${p.id})"><img src="${esc(p.img)}" onerror="imgErr(this)" data-e="${catEmoji(p.cat)}" loading="lazy" decoding="async" alt="">${out?'<div class="out-stock">⛔ স্টক শেষ</div>':''}</div><h3 onclick="openDetail(${p.id})" class="pc-name">${esc(p.name)}</h3>${p.vendor?vTag(p):''}<div class="pc-price">${p.old>p.price?`<del>৳${p.old}</del>`:''}<b>৳${p.price}</b></div>${btn}</div>`;}
+function vCard(v){const st=vStats(v);return `<div class="bg-white premium-card rounded-2xl overflow-hidden">${vBanner(v,108)}<div class="px-4 pb-4 text-center"><div class="relative inline-block -mt-[44px]">${vAvatar(v,88)}${vCheck}</div><h3 class="font-extrabold text-[19px] mt-1">${esc(v.shop)}</h3>${vRating(st)}${vStatsBox(st)}<button onclick="openStore('${esc(v.id)}')" class="vbtn mt-3">Visit Store →</button></div></div>`;}
+function renderVendors(){const q=(($('vSearch')||{}).value||'').toLowerCase();const all=allVendors().filter(v=>v.status=='Approved');$('vendorCount').innerText=all.length;$('vendorList').innerHTML=all.filter(v=>String(v.shop).toLowerCase().includes(q)).map(vCard).join('')||'<div class="text-center bg-white rounded-2xl py-10 text-gray-500"><div class="text-5xl">🏪</div><p class="mt-2">কোনো ভেন্ডর পাওয়া যায়নি</p></div>';}
+window.openStore=function(id){curStore=id;go('store','category');};
+const infoCard=(ic,t,m)=>`<div class="bg-white premium-card rounded-2xl p-5 text-center"><div class="text-5xl">${ic}</div><h3 class="font-bold text-[18px] mt-2">${t}</h3><p class="text-sm text-gray-500 mt-1">${m}</p></div>`;
+function renderStore(){const v=allVendors().find(x=>x.id==curStore);const box=$('storeBox');if(!v||v.status!='Approved'){box.innerHTML=infoCard('🏪','স্টোর পাওয়া যায়নি','');return;}const st=vStats(v),mv=myVendor(),own=mv&&mv.id==v.id;
+box.innerHTML=`<p class="text-[13px] text-gray-500 mb-2"><span onclick="go('home','home')" class="cursor-pointer">Home</span> / <span onclick="go('vendors','category')" class="cursor-pointer">Sellers</span> / <b class="text-gray-800">${esc(v.shop)}</b></p><div class="bg-white premium-card rounded-2xl overflow-hidden">${vBanner(v,130)}<div class="px-4 pb-4 text-center"><div class="relative inline-block -mt-[46px]">${vAvatar(v,92)}${vCheck}</div><h2 class="font-extrabold text-[21px] mt-1">${esc(v.shop)}</h2>${vRating(st)}${v.bio?`<p class="text-sm text-gray-600 mt-2">${esc(v.bio)}</p>`:''}${v.address?`<p class="text-[12px] text-gray-500 mt-1">📍 ${esc(v.address)}</p>`:''}${vStatsBox(st)}${v.phone?`<div class="flex gap-2 mt-3"><a href="tel:+${bdNum(v.phone)}" class="flex-1 btn-call py-2 text-center text-sm">📞 কল</a><a target="_blank" href="https://wa.me/${bdNum(v.phone)}" class="flex-1 btn-wa py-2 text-center text-sm">💬 WhatsApp</a></div>`:''}${own?`<button onclick="go('myshop','account')" class="vbtn mt-3">✏️ প্রোফাইল কাস্টমাইজ ও প্রোডাক্ট যোগ</button>`:''}</div></div><h3 class="font-bold text-[17px] mt-4">🛍️ প্রোডাক্ট (${st.items})</h3><div class="grid grid-cols-2 gap-3 pt-2">${st.ps.map(pCard).join('')||'<p class="col-span-2 text-center text-gray-500 py-8 bg-white rounded-2xl">এখনো কোনো প্রোডাক্ট নেই</p>'}</div>`;}
+function updVendorUI(){const mv=myVendor();let t='Vendor Ship - আবেদন',tag='<span class="new-tag">NEW</span>';if(mv){if(mv.status=='Approved'){t='আমার ভেন্ডর শীপ';tag='<span class="new-tag">ID</span>';}else if(mv.status=='Pending'){t='ভেন্ডর শীপ (পেন্ডিং)';tag='';}else{t='ভেন্ডর আবেদন (বাতিল)';tag='';}}const a=$('sideVendorTxt');if(a)a.textContent=t;const g=$('sideVendorTag');if(g)g.innerHTML=tag;const b=$('accVendorBtn');if(b)b.textContent=mv?(mv.status=='Approved'?'🏪 আমার ভেন্ডর শীপ':'🏪 ভেন্ডর শীপ স্ট্যাটাস'):'🏪 ভেন্ডর শীপ নিন';}
+const cmpImg=(file,max)=>new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{let w=im.width,h=im.height,k=Math.min(1,max/Math.max(w,h));w=Math.round(w*k);h=Math.round(h*k);const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',.82));};im.onerror=()=>res(null);im.src=r.result;};r.onerror=()=>res(null);r.readAsDataURL(file);});
+function vProfSave(patch){const v=myVendor();if(!v)return;const e=Object.assign({},myV[v.id]||{},patch,{upd:Date.now()});myV[v.id]=e;if(!saveMy())return;const m=Object.assign({},v,e);fbPush('vendorProfiles/'+v.id,{id:v.id,shop:m.shop,bio:m.bio||'',phone:m.phone||'',address:m.address||'',logo:m.logo||'',banner:m.banner||'',upd:e.upd});renderMyShop();updVendorUI();}
+window.vPickImg=async function(inp,k,max){const f=inp.files[0];inp.value='';if(!f)return;const d=await cmpImg(f,max);if(!d){showNotif('ছবি পড়া যায়নি','অন্য ছবি দিন','⚠️');return;}vProfSave(k=='logo'?{logo:d}:{banner:d});showNotif('আপডেট হয়েছে','আপনার আইডি আপডেট হয়েছে','✅');};
+window.vSaveForm=function(){const sh=$('mvShop').value.trim();if(!sh){showNotif('শপের নাম দিন','নাম খালি রাখা যাবে না','⚠️');return;}vProfSave({shop:sh,bio:$('mvBio').value.trim(),phone:$('mvPhone').value.trim(),address:$('mvAddr').value.trim()});showNotif('সেভ হয়েছে','ভেন্ডর প্রোফাইল আপডেট হয়েছে','✅');};
+function renderMyShop(){const box=$('myShopBox');const v=myVendor();
+if(!v){box.innerHTML=infoCard('🏪','ভেন্ডর শীপ নেই','আগে ভেন্ডর আবেদন করুন।')+`<button onclick="go('vendor','vendor')" class="btn-vendor mt-3">🚀 আবেদন করুন</button>`;return;}
+if(v.status!='Approved'){box.innerHTML=v.status=='Rejected'?infoCard('🚫','আবেদন বাতিল হয়েছে','বিস্তারিত জানতে সাপোর্টে যোগাযোগ করুন।'):infoCard('⏳','আবেদন পর্যালোচনা চলছে','এডমিন অনুমোদন দিলে আপনার ভেন্ডর শীপ আইডি চালু হবে — তখন প্রোফাইল কাস্টমাইজ ও প্রোডাক্ট যোগ করতে পারবেন।');return;}
+const st=vStats(v),mine=vProds(v.id);const stT={Pending:['অপেক্ষমান','bg-amber-100 text-amber-700'],Approved:['লাইভ ✅','bg-green-100 text-green-700'],Rejected:['বাতিল','bg-red-100 text-red-700']};
+box.innerHTML=`<div class="bg-white premium-card rounded-2xl overflow-hidden"><div class="relative">${vBanner(v,120)}<label class="absolute right-2 top-2 bg-white/90 text-[12px] font-bold px-3 py-1.5 rounded-full cursor-pointer shadow">🖼️ ব্যানার বদলান<input type="file" accept="image/*" class="hidden" onchange="vPickImg(this,'banner',900)"></label></div><div class="px-4 pb-4 text-center"><div class="relative inline-block -mt-[44px]">${vAvatar(v,88)}<label class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center cursor-pointer border text-[14px]">📷<input type="file" accept="image/*" class="hidden" onchange="vPickImg(this,'logo',300)"></label></div><h2 class="font-extrabold text-[20px] mt-1">${esc(v.shop)}</h2>${vRating(st)}${vStatsBox(st)}<button onclick="openStore('${esc(v.id)}')" class="vbtn mt-3">👁️ আমার স্টোর দেখুন</button></div></div>
+<div class="bg-white premium-card rounded-2xl p-4 mt-3"><h3 class="font-bold">✏️ আইডি কাস্টমাইজ</h3><label class="text-sm font-bold block mt-2">শপের নাম *</label><input id="mvShop" class="vfield" value="${esc(v.shop)}"><label class="text-sm font-bold block mt-2">স্টোর বিবরণ (বায়ো)</label><textarea id="mvBio" rows="2" class="vfield" placeholder="আপনার শপ সম্পর্কে লিখুন">${esc(v.bio||'')}</textarea><label class="text-sm font-bold block mt-2">মোবাইল</label><input id="mvPhone" class="vfield" value="${esc(v.phone||'')}"><label class="text-sm font-bold block mt-2">ঠিকানা</label><input id="mvAddr" class="vfield" value="${esc(v.address||'')}"><button onclick="vSaveForm()" class="btn-order mt-3">💾 সেভ করুন</button></div>
+<div class="flex items-center mt-4"><h3 class="font-bold text-[17px] flex-1">📦 আমার প্রোডাক্ট (${mine.length})</h3><button onclick="openVForm()" class="btn-order" style="min-width:0;margin:0">➕ নতুন</button></div><div class="space-y-2 mt-2">${mine.map(p=>{const s=stT[p.vstatus||'Pending']||stT.Pending;return `<div class="flex items-center gap-3 bg-white premium-card rounded-2xl p-2.5"><img src="${esc(p.img)}" onerror="imgErr(this)" data-e="${catEmoji(p.cat)}" class="w-[58px] h-[58px] rounded-xl object-cover shrink-0"><div class="flex-1 min-w-0"><b class="block text-[14px] truncate">${esc(p.name)}</b><span class="text-[12px] text-gray-500">৳ ${p.price} • স্টক ${p.stock}</span><br><span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${s[1]}">${s[0]}</span></div><button onclick="openVForm(${p.id})" class="w-9 h-9 rounded-xl bg-purple-50">✏️</button><button onclick="vDel(${p.id})" class="w-9 h-9 rounded-xl bg-red-50">🗑️</button></div>`;}).join('')||'<p class="text-center text-gray-500 py-8 bg-white rounded-2xl">এখনো কোনো প্রোডাক্ট নেই — ➕ নতুন চাপুন</p>'}</div><p class="text-[12px] text-gray-500 mt-3 text-center">নতুন বা এডিট করা প্রোডাক্ট এডমিন অনুমোদন দিলে শপে লাইভ হবে।</p>`;}
+window.closeVSheet=function(){$('vSheet').classList.add('hide');};
+const vf=(l,id,v,t,ph)=>`<label class="text-sm font-bold block mt-2">${l}</label><input id="${id}" type="${t||'text'}" class="vfield" value="${esc(v)}" placeholder="${esc(ph||'')}">`;
+window.openVForm=function(id){const v=myVendor();if(!v||v.status!='Approved')return;const p=id?vProds(v.id).find(x=>x.id==id):null;vEdit=p?p.id:0;vTmp=p?mediaOf(p).map(x=>({t:x.t,s:x.s})):[];
+$('vSheetBody').innerHTML=`<div class="flex items-center"><h3 class="font-bold text-[18px] flex-1">${p?'✏️ প্রোডাক্ট এডিট':'➕ নতুন প্রোডাক্ট'}</h3><button onclick="closeVSheet()" class="w-8 h-8 rounded-full bg-gray-100 font-bold">✕</button></div>${vf('নাম *','vfN',p?p.name:'')}<div class="grid grid-cols-2 gap-2"><div>${vf('বিক্রয় মূল্য ৳ *','vfP',p?p.price:'','number')}</div><div>${vf('আসল মূল্য ৳','vfO',p&&p.old?p.old:'','number')}</div></div><div class="grid grid-cols-2 gap-2"><div><label class="text-sm font-bold block mt-2">ক্যাটাগরি</label><select id="vfC" class="vfield">${categories.map(c=>`<option ${p&&p.cat==c.name?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div><div>${vf('স্টক সংখ্যা','vfS',p?p.stock:10,'number')}</div></div><label class="text-sm font-bold block mt-2">বিবরণ</label><textarea id="vfD" rows="3" class="vfield">${esc(p?p.desc:'')}</textarea><label class="text-sm font-bold block mt-2">📷 ছবি ও 🎬 ভিডিও (যত খুশি)</label><div id="vmList" class="flex flex-wrap gap-2 mt-1"></div><div class="flex flex-wrap gap-2 mt-2"><label class="text-[13px] font-bold px-3 py-2 rounded-xl bg-purple-50 text-purple-700 cursor-pointer">📷 ছবি আপলোড<input type="file" accept="image/*" multiple class="hidden" onchange="vmAddImgs(this)"></label></div><div class="flex gap-2 mt-2"><input id="vmUrl" class="vfield" style="margin-top:0" placeholder="ভিডিও / ছবির লিংক (YouTube বা .mp4)"><button onclick="vmAddUrl()" class="px-4 rounded-xl bg-gray-800 text-white font-bold text-sm shrink-0">যোগ</button></div><p class="text-[11px] text-gray-500 mt-1">প্রথম ছবিটিই কভার। ◀ ▶ দিয়ে সাজান। ভিডিও শুধু লিংক দিয়ে যোগ হবে।</p><div class="flex gap-2 mt-4"><button onclick="closeVSheet()" class="flex-1 py-3 rounded-xl bg-gray-100 font-bold">বাতিল</button><button onclick="saveVProd()" class="flex-1 py-3 rounded-xl grad text-white font-bold">💾 জমা দিন</button></div>`;
+$('vSheet').classList.remove('hide');vmDraw();};
+function vmDraw(){const el=$('vmList');if(!el)return;const ci=vTmp.findIndex(m=>m.t!='v');el.innerHTML=vTmp.map((m,i)=>{const y=m.t=='v'?ytId(m.s):'';const inner=m.t=='v'?(y?`<span class="text-2xl">🎬</span><img src="https://img.youtube.com/vi/${y}/mqdefault.jpg" class="absolute inset-0 w-full h-full object-cover" onerror="this.remove()" alt="">`:'<span class="text-2xl">🎬</span>'):`<img src="${esc(m.s)}" class="w-full h-full object-cover" onerror="this.style.visibility='hidden'" alt="">`;return `<div class="relative" style="width:76px"><div class="relative w-[76px] h-[76px] rounded-xl overflow-hidden bg-pink-50 flex items-center justify-center">${inner}</div>${i==ci?'<span class="absolute left-1 top-1 grad text-white text-[10px] font-bold px-1.5 rounded-full">কভার</span>':''}<button onclick="vmRm(${i})" class="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/65 text-white text-[11px]">✕</button><div class="flex gap-1 mt-1"><button onclick="vmMv(${i},-1)" class="flex-1 bg-purple-50 rounded-md text-[11px] py-0.5">◀</button><button onclick="vmMv(${i},1)" class="flex-1 bg-purple-50 rounded-md text-[11px] py-0.5">▶</button></div></div>`;}).join('')||'<small class="text-gray-400">এখনো কোনো ছবি / ভিডিও নেই</small>';}
+window.vmRm=function(i){vTmp.splice(i,1);vmDraw();};
+window.vmMv=function(i,d){const j=i+d;if(j<0||j>=vTmp.length)return;[vTmp[i],vTmp[j]]=[vTmp[j],vTmp[i]];vmDraw();};
+window.vmAddImgs=async function(inp){const fs=[...inp.files];inp.value='';for(const f of fs){const d=await cmpImg(f,800);if(d){vTmp.push({t:'i',s:d});vmDraw();}}};
+window.vmAddUrl=function(){const u=$('vmUrl').value.trim();if(!u)return;const v=!!ytId(u)||/\.(mp4|webm|ogg|mov)(\?|$)/i.test(u);vTmp.push({t:v?'v':'i',s:u});$('vmUrl').value='';vmDraw();};
+window.saveVProd=function(){const v=myVendor();if(!v||v.status!='Approved')return;const name=$('vfN').value.trim(),price=Number($('vfP').value);if(!name||!price){showNotif('নাম ও দাম দিন','নাম এবং বিক্রয় মূল্য দরকার','⚠️');return;}const cover=vTmp.find(m=>m.t!='v');if(!cover){showNotif('একটি ছবি দিন','কমপক্ষে একটি ছবি যোগ করুন','⚠️');return;}
+const old=vEdit?vProds(v.id).find(x=>x.id==vEdit):null,now=Date.now(),stock=Math.max(0,Number($('vfS').value)||0);
+const o={id:old?old.id:now,name,price,old:Number($('vfO').value)||0,cat:$('vfC').value,stock,desc:$('vfD').value.trim(),img:cover.s,media:vTmp.map(m=>({t:m.t,s:m.s})),code:old?old.code:'V'+String(now).slice(-6),rating:old?old.rating:5,rcount:old?old.rcount:0,inStock:stock>0?1:0,vendor:v.id,vstatus:'Pending',upd:now};
+const i=myProds.findIndex(x=>x.id==o.id);if(i>=0)myProds[i]=o;else myProds.push(o);if(!saveMy())return;fbPush('vendorProducts/'+o.id,o);closeVSheet();renderMyShop();showNotif('প্রোডাক্ট জমা হয়েছে','এডমিন অনুমোদন দিলে শপে লাইভ হবে','✅');};
+window.vDel=function(id){if(!confirm('এই প্রোডাক্ট মুছে ফেলবেন?'))return;const v=myVendor();if(!v)return;const m={id,vendor:v.id,deleted:1,upd:Date.now()};const i=myProds.findIndex(x=>x.id==id);if(i>=0)myProds[i]=m;else myProds.push(m);saveMy();fbPush('vendorProducts/'+id,m);renderMyShop();};
+setRevStar(5);applyTheme();renderCats();updVendorUI();$('fabIcon').innerHTML=supIc();renderProducts();renderReviews();renderPayments();updateCart();setActiveNav('home');startSlider();renderSideMenu();
+}catch(e){alert('App load error: '+e.message)}
+</script>
+<script>setTimeout(function(){var s=document.getElementById('bootSplash');if(s){s.classList.add('out');setTimeout(function(){s.remove()},450)}if(window.showEntryPop)showEntryPop()},3500)</script>
+</body>
+</html>
